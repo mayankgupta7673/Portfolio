@@ -108,11 +108,25 @@ export function initRingGallery(): { setScroll(v: number): void } | null {
     ring.add(plane);
   }
 
+  const VFOV_RAD = THREE.MathUtils.degToRad(48);
+  const BASE_Z = 9.4;
+  // Reference aspect the ring was framed for; narrower (portrait/mobile) viewports
+  // give a much narrower horizontal FOV at the same vertical FOV, which is what
+  // made the icons blow up and spill off-screen on phones.
+  const REF_ASPECT = 16 / 9;
+  const hFov = (aspect: number) => 2 * Math.atan(Math.tan(VFOV_RAD / 2) * aspect);
+  const refHFov = hFov(REF_ASPECT);
+
   const resize = () => {
     const rect = host.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) return;
     renderer.setSize(rect.width, rect.height, false);
-    camera.aspect = rect.width / rect.height;
+    const aspect = rect.width / rect.height;
+    camera.aspect = aspect;
+    // Only pull the camera back for aspects narrower than the reference (portrait/
+    // mobile) — clamping to 1 leaves anything at-or-wider-than 16:9 (all normal
+    // desktop viewports) at the original, already-correct BASE_Z distance.
+    camera.position.z = BASE_Z * Math.max(1, refHFov / hFov(aspect));
     camera.updateProjectionMatrix();
   };
   resize();

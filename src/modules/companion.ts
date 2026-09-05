@@ -3,13 +3,16 @@ import { gsap } from "gsap";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 /**
- * 3D character helper.
+ * 3D character helper — same functionality on touch as on desktop: always on
+ * screen, continuously reactive, tap-to-react.
  *
- * Desktop  — trails the cursor, banks into turns, glances where you're heading.
- * Touch    — there is no cursor to follow, so it parks in the corner at a smaller
- *            size and reacts to scrolling instead: it leans into the scroll
- *            direction, bobs with momentum, and reacts when tapped. It can be
- *            dismissed, and it steps aside while the mobile menu is open.
+ * Desktop — trails the actual cursor position, banks into turns, glances where
+ *           it's heading.
+ * Touch   — there's no persistent cursor to follow, so its target position is
+ *           driven by scroll instead: it drifts smoothly across a comfortable
+ *           on-screen band as you scroll, using the exact same quickTo-based
+ *           follow mechanics as the desktop cursor-follow (not a static parked
+ *           corner), and still reacts to tapping.
  *
  * Skipped entirely under prefers-reduced-motion.
  */
@@ -27,12 +30,10 @@ export function initCompanion(): void {
     return;
   }
 
-  // Touch/narrow devices get the parked variant rather than nothing at all.
   const isTouch =
     window.matchMedia("(pointer: coarse)").matches || window.matchMedia("(max-width: 900px)").matches;
 
-  const SIZE = isTouch ? 130 : 280;
-  host.classList.toggle("companion--parked", isTouch);
+  const SIZE = isTouch ? 170 : 280;
   host.style.width = `${SIZE}px`;
   host.style.height = `${SIZE}px`;
 
@@ -131,13 +132,16 @@ export function initCompanion(): void {
   let targetLean = 0;
   let targetPitch = 0;
 
+  gsap.set(host, { opacity: 0, scale: 0.6, xPercent: -50, yPercent: -50 });
+  const moveX = gsap.quickTo(host, "x", { duration: 0.85, ease: "power3.out" });
+  const moveY = gsap.quickTo(host, "y", { duration: 0.95, ease: "power3.out" });
+
   if (!isTouch) {
     // --- Desktop: trail the cursor ---
-    gsap.set(host, { opacity: 0, scale: 0.6, xPercent: -50, yPercent: -50 });
-    const moveX = gsap.quickTo(host, "x", { duration: 0.85, ease: "power3.out" });
-    const moveY = gsap.quickTo(host, "y", { duration: 0.95, ease: "power3.out" });
     let lastX = window.innerWidth / 2;
     let lastY = window.innerHeight / 2;
+    moveX(lastX);
+    moveY(lastY);
 
     window.addEventListener("pointermove", (e) => {
       moveX(e.clientX + 150);
@@ -153,40 +157,32 @@ export function initCompanion(): void {
       lastY = e.clientY;
     });
   } else {
-    // --- Touch: parked in the corner, driven by scroll instead of a cursor ---
-    gsap.set(host, { opacity: 0, scale: 0.6 });
+    // --- Touch: no persistent cursor to follow, so scroll drives the same
+    // quickTo-based follow instead — it stays on screen and keeps drifting
+    // through a comfortable band as you scroll, rather than sitting parked.
     let lastScroll = window.scrollY;
 
-    // dismiss control, so it can never sit on top of something you're trying to read
-    const close = document.createElement("button");
-    close.className = "companion-close";
-    close.setAttribute("aria-label", "Hide the assistant");
-    close.textContent = "×";
-    close.addEventListener("click", (e) => {
-      e.stopPropagation();
-      gsap.to(host, {
-        opacity: 0,
-        scale: 0.5,
-        duration: 0.35,
-        ease: "power2.in",
-        onComplete: () => host.remove(),
-      });
-    });
-    host.appendChild(close);
+    const updateFromScroll = () => {
+      const y = window.scrollY;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      // Clamped defensively: window.innerWidth/innerHeight can transiently report a
+      // widened viewport mid-scroll (e.g. a brief layout reflow elsewhere on the
+      // page), which would otherwise throw the target off-screen for a beat.
+      const vw = Math.min(w, document.documentElement.clientWidth);
+      const vh = Math.min(h, document.documentElement.clientHeight);
+      const half = SIZE / 2;
+      moveX(THREE.MathUtils.clamp(vw * 0.78 + Math.cos(y * 0.0016) * vw * 0.09, half + 8, vw - half - 8));
+      moveY(THREE.MathUtils.clamp(vh * 0.32 + Math.sin(y * 0.0021) * vh * 0.14, half + 8, vh - half - 8));
 
-    window.addEventListener(
-      "scroll",
-      () => {
-        const y = window.scrollY;
-        const dy = y - lastScroll;
-        lastScroll = y;
-        // lean into the scroll direction and spin slightly with momentum
-        targetLean = THREE.MathUtils.clamp(dy * 0.012, -0.4, 0.4);
-        targetTurn = THREE.MathUtils.clamp(dy * 0.01, -0.7, 0.7);
-        targetPitch = THREE.MathUtils.clamp(-dy * 0.006, -0.25, 0.25);
-      },
-      { passive: true },
-    );
+      const dy = y - lastScroll;
+      lastScroll = y;
+      targetLean = THREE.MathUtils.clamp(dy * 0.012, -0.4, 0.4);
+      targetTurn = THREE.MathUtils.clamp(dy * 0.01, -0.7, 0.7);
+      targetPitch = THREE.MathUtils.clamp(-dy * 0.006, -0.25, 0.25);
+    };
+    updateFromScroll();
+    window.addEventListener("scroll", updateFromScroll, { passive: true });
 
     // step aside while the mobile menu is open
     const mobileNav = document.querySelector("[data-mobile-nav]");

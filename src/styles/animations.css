@@ -84,8 +84,14 @@ section {
     height: 88svh;
   }
   .journey-track {
-    height: 64svh;
-    min-height: 460px;
+    height: 88svh;
+    min-height: 520px;
+  }
+  /* A bigger year number gives the chapter something to visually anchor on,
+     instead of the taller box just reading as empty space below the text. */
+  .journey-year {
+    font-size: clamp(4.5rem, 22vw, 7rem);
+    margin-bottom: 22px;
   }
 }
 
@@ -189,37 +195,14 @@ section {
   filter: drop-shadow(0 18px 26px rgba(13, 35, 56, 0.28));
 }
 .companion canvas {
-  width: 280px !important;
-  height: 280px !important;
+  /* sized off the host's own width/height (set from JS: 280px desktop, 170px
+     touch) rather than a hardcoded value, so both variants render at their
+     intended size instead of the canvas overflowing a smaller host. */
+  width: 100% !important;
+  height: 100% !important;
 }
 @media (prefers-reduced-motion: reduce) {
   .companion { display: none; }
-}
-
-/* Touch variant: parked bottom-right, out of the way of content and safe areas */
-.companion--parked {
-  top: auto;
-  left: auto;
-  right: calc(10px + env(safe-area-inset-right));
-  bottom: calc(10px + env(safe-area-inset-bottom));
-  transform: none !important;
-  filter: drop-shadow(0 10px 18px rgba(13, 35, 56, 0.32));
-}
-.companion-close {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: 17px;
-  line-height: 1;
-  color: #eaf6ff;
-  background: rgba(13, 35, 56, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  backdrop-filter: blur(6px);
 }
 
 /* ===== Header: nav grouped centre -> right, no hamburger on desktop ===== */

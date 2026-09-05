@@ -1,4 +1,47 @@
+# Everything is public — search engines and AI crawlers/answer-engines are
+# explicitly welcome, since visibility for brand + skill searches is the goal.
 User-agent: *
+Allow: /
+
+# Named explicitly so it's unambiguous to crawlers that only honour a listed
+# rule rather than falling back to the wildcard.
+User-agent: Googlebot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
 Allow: /
 
 Sitemap: https://mayankcloud.com/sitemap.xml

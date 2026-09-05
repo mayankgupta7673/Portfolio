@@ -9,10 +9,34 @@
   display: flex;
   align-items: center;
   transition: transform 0.45s var(--ease-out);
-  mix-blend-mode: normal;
 }
 .site-header.is-hidden {
   transform: translateY(-120%);
+}
+/* A permanent, subtle backdrop behind the whole header — without this the logo and
+   resume button sit on fully transparent space and become illegible over photos,
+   the pinned journey chapters, or the mobile menu underneath them. */
+.site-header::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(247, 251, 255, 0.72) 0%, rgba(247, 251, 255, 0.32) 75%, transparent 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.site-header.on-dark-section::before,
+.site-header.hero-lit::before {
+  background: linear-gradient(180deg, rgba(9, 26, 43, 0.55) 0%, rgba(9, 26, 43, 0.22) 75%, transparent 100%);
+}
+/* While the mobile menu is open, everything except the toggle button (now an ×)
+   fades out — otherwise it shows through, ghosted and often in the wrong colour,
+   on top of the menu panel underneath. */
+.site-header.menu-open .logo,
+.site-header.menu-open .header-right {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
 }
 
 .header-inner {
@@ -180,6 +204,13 @@
   gap: 10px;
   color: var(--text-muted);
   font-family: var(--font-mono);
+}
+/* Flex items refuse to shrink below their own content width by default, which is
+   what let the email address run straight past the viewport edge instead of
+   wrapping. */
+.mobile-nav-footer a {
+  min-width: 0;
+  overflow-wrap: anywhere;
   font-size: 0.78rem;
 }
 
@@ -329,7 +360,9 @@
 }
 @media (max-width: 700px) {
   .hero-meta {
-    padding-bottom: 64px;
+    /* extra clearance so the resume button's bottom edge sits above the
+       "scroll to explore" cue instead of overlapping it */
+    padding-bottom: 100px;
   }
   .hero-name {
     padding-bottom: 14px;

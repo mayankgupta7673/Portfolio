@@ -43,11 +43,16 @@ export function initNav(): void {
   const closeMenu = () => {
     menuToggle?.setAttribute("aria-expanded", "false");
     mobileNav?.classList.remove("is-open");
+    header?.classList.remove("menu-open");
     document.body.style.overflow = "";
   };
   const openMenu = () => {
     menuToggle?.setAttribute("aria-expanded", "true");
     mobileNav?.classList.add("is-open");
+    // Hides the logo/nav-pill so they can't show through (ghosted, and often in the
+    // wrong colour) behind the mobile menu panel — only the toggle button (now an
+    // ×) stays visible, since it needs to remain tappable to close the menu.
+    header?.classList.add("menu-open");
     document.body.style.overflow = "hidden";
   };
   menuToggle?.addEventListener("click", () => {
