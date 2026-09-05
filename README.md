@@ -30,6 +30,7 @@ instead and reacts to scroll momentum. Hidden under `prefers-reduced-motion`.
 ## Status
 
 ### Done
+
 - [x] Real content throughout — every role, date, project, skill and certification
       comes from the resume PDF, not invented
 - [x] Azure-leaning colour theme (light blue), applied consistently including the
@@ -54,9 +55,13 @@ instead and reacts to scroll momentum. Hidden under `prefers-reduced-motion`.
       typography, includes the Azure architecture diagram from the hero
 - [x] Domain confirmed final: `mayankcloud.com`. The hardcoded URLs in `index.html`,
       `public/robots.txt` and `public/sitemap.xml` are correct as-is.
+- [x] Node version pinned (`.node-version`, `engines` in package.json) and a leftover
+      `@playwright/test` production dependency removed — see *Deploying to Cloudflare
+      Pages* below for why this mattered.
 
 ### Left to do
-- [ ] **Push to GitHub + connect Cloudflare Pages** — commands below; not yet done.
+
+- [x] Pushed to GitHub (`mayankgupta7673/Portfolio`); Cloudflare Pages connected.
 - [ ] **Work/gallery imagery is stock** (`public/images/az-*.jpg`, Unsplash) standing
       in for real project screenshots or diagrams.
 - [ ] **GitHub link** — only LinkedIn is wired up in the header/footer; add a GitHub
@@ -136,12 +141,35 @@ npm run preview   # serve the production build
 ## Deploying to Cloudflare Pages
 
 ### Git integration (auto-deploys on push)
-1. Push to GitHub (below).
+
+1. Push to GitHub (already done — `mayankgupta7673/Portfolio`).
 2. Cloudflare dashboard → **Workers & Pages → Create → Pages → Connect to Git**.
-3. Build settings — Framework preset: **Vite**, Build command: `npm run build`,
-   Output directory: `dist`.
+3. Build settings:
+   - Framework preset: **Vite**
+   - Build command: `npm run build`
+   - Build output directory: `dist`
+   - Root directory: `/` (leave blank unless the site lives in a subfolder)
+4. Environment variable (belt-and-suspenders, on top of `.node-version`): add
+   `NODE_VERSION` = `22` under **Settings → Environment variables**. Vite 8
+   requires Node `^20.19.0 || >=22.12.0`, and Cloudflare's default build image
+   has historically been older than that — this is the #1 cause of a build that
+   works locally but fails on Cloudflare.
+5. Save and deploy. If a previous build failed, trigger a fresh one afterward
+   (**Deployments → Retry deployment**, or push an empty commit) — Cloudflare
+   won't automatically re-run a failed build when you only change dashboard
+   settings.
+
+**If the build still fails**, open the failed deployment's build log in the
+Cloudflare dashboard and check the `npm install` step specifically. A repo
+history note: an earlier commit accidentally left `@playwright/test` in
+`dependencies` — Playwright's postinstall step downloads browser binaries,
+which fails in most CI/build sandboxes (no display server, restricted
+network) and takes the whole install down with it. That's fixed now, but
+it's worth knowing if you ever see an install step fail on a package you
+didn't expect to need for a static site.
 
 ### Or direct upload
+
 ```bash
 npm install -g wrangler
 npm run build
@@ -149,6 +177,7 @@ wrangler pages deploy dist --project-name=mayank-portfolio
 ```
 
 ### Connecting mayankcloud.com
+
 - **Already on Cloudflare DNS:** Pages project → **Custom domains** → add
   `mayankcloud.com`. Records and SSL are provisioned automatically.
 - **Registered elsewhere:** add the domain as a zone in Cloudflare, repoint the
@@ -157,15 +186,6 @@ wrangler pages deploy dist --project-name=mayank-portfolio
 Then update the hardcoded `https://mayankcloud.com` URLs in `index.html` (canonical,
 `og:url`, `og:image`, JSON-LD) and in `public/robots.txt` / `public/sitemap.xml` if the
 final domain differs.
-
-## Pushing to GitHub
-
-```bash
-git remote add origin https://github.com/<your-username>/<repo-name>.git
-git branch -M main
-git push -u origin main
-```
-(Create the empty repo on GitHub first.)
 
 ## SEO notes
 
