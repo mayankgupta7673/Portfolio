@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 320" fill="none">
+  <defs>
+    <linearGradient id="screen" x1="70" y1="150" x2="230" y2="250" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#38c6f4"/>
+      <stop offset="1" stop-color="#0b6bcb"/>
+    </linearGradient>
+    <linearGradient id="skin" x1="120" y1="60" x2="185" y2="140" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#c08a5e"/>
+      <stop offset="1" stop-color="#9c6840"/>
+    </linearGradient>
+    <linearGradient id="shirt" x1="90" y1="160" x2="215" y2="300" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#3a322d"/>
+      <stop offset="1" stop-color="#26201c"/>
+    </linearGradient>
+  </defs>
+
+  <!-- desk glow -->
+  <ellipse cx="150" cy="292" rx="120" ry="16" fill="#38c6f4" opacity="0.12"/>
+
+  <!-- torso -->
+  <path d="M92 300c0-46 26-74 58-74s58 28 58 74z" fill="url(#shirt)"/>
+
+  <!-- arms to keyboard -->
+  <path d="M104 262c-14 8-22 18-24 30" stroke="url(#shirt)" stroke-width="16" stroke-linecap="round"/>
+  <path d="M196 262c14 8 22 18 24 30" stroke="url(#shirt)" stroke-width="16" stroke-linecap="round"/>
+
+  <!-- neck -->
+  <rect x="139" y="150" width="22" height="34" rx="11" fill="#9c6840"/>
+
+  <!-- head -->
+  <ellipse cx="150" cy="118" rx="40" ry="44" fill="url(#skin)"/>
+  <!-- hair -->
+  <path d="M110 108c0-26 18-42 40-42s40 16 40 42c0-14-16-20-40-20s-40 6-40 20z" fill="#201915"/>
+  <!-- beard hint -->
+  <path d="M120 132c6 18 17 28 30 28s24-10 30-28c-8 12-18 17-30 17s-22-5-30-17z" fill="#201915" opacity="0.55"/>
+
+  <!-- glasses -->
+  <rect x="120" y="110" width="26" height="19" rx="7" stroke="#17120f" stroke-width="3.5" fill="#cfe3ef" fill-opacity="0.35"/>
+  <rect x="154" y="110" width="26" height="19" rx="7" stroke="#17120f" stroke-width="3.5" fill="#cfe3ef" fill-opacity="0.35"/>
+  <path d="M146 119h8" stroke="#17120f" stroke-width="3.5"/>
+
+  <!-- headphones -->
+  <path d="M104 120a46 46 0 0 1 92 0" stroke="#17120f" stroke-width="11" stroke-linecap="round"/>
+  <rect x="92" y="112" width="22" height="40" rx="11" fill="#17120f"/>
+  <rect x="186" y="112" width="22" height="40" rx="11" fill="#17120f"/>
+  <rect x="96" y="120" width="8" height="24" rx="4" fill="#38c6f4" opacity="0.8"/>
+
+  <!-- laptop -->
+  <path d="M78 300l14-52h116l14 52z" fill="#2f2823"/>
+  <rect x="86" y="236" width="128" height="20" rx="5" fill="#17120f"/>
+  <path d="M96 232l8-58h92l8 58z" fill="#0f0c0a"/>
+  <path d="M102 227l7-48h82l7 48z" fill="url(#screen)" opacity="0.85"/>
+  <!-- code lines on screen -->
+  <g opacity="0.75" stroke="#fff7f1" stroke-width="2.4" stroke-linecap="round">
+    <path d="M112 192h20"/><path d="M138 192h34"/>
+    <path d="M112 201h44"/><path d="M162 201h14"/>
+    <path d="M112 210h16"/><path d="M134 210h40"/>
+    <path d="M112 219h30"/>
+  </g>
+
+  <!-- music notes -->
+  <g fill="#38c6f4" opacity="0.9">
+    <circle cx="232" cy="96" r="6"/>
+    <rect x="236" y="66" width="3" height="32" rx="1.5"/>
+    <path d="M239 66c8 2 12 5 14 10-4-3-8-4-14-3z"/>
+    <circle cx="256" cy="126" r="4.5"/>
+    <rect x="259" y="104" width="2.5" height="24" rx="1.25"/>
+  </g>
+  <g fill="#0b6bcb" opacity="0.55">
+    <circle cx="56" cy="120" r="5"/>
+    <rect x="59" y="96" width="2.5" height="26" rx="1.25"/>
+  </g>
+</svg>

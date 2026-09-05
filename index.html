@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4f8fc" />
+
+    <!--
+      Critical CSS, inlined so first paint is never unstyled — this covers only the
+      loader (visible before anything else) plus the base page colour. The real
+      stylesheet is loaded via the <link> below (a genuine network resource in both
+      dev and prod), not via a JS import, which is what caused the flash: Vite's dev
+      server injects JS-imported CSS through a <style> tag AFTER main.ts executes,
+      so the raw HTML paints first for a beat. A <link> blocks first paint like any
+      normal stylesheet, and this inline block covers the gap before it arrives.
+    -->
+    <style>
+      html, body { background: #f7fbff; }
+      body.is-loading { overflow: hidden; }
+      .loader {
+        position: fixed; inset: 0; z-index: 500;
+        background: #eff7ff;
+        display: grid; place-items: center;
+      }
+      .loader-mark {
+        font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+        font-size: 0.8rem; letter-spacing: 0.08em; color: #62819d;
+        display: flex; gap: 6px; align-items: center;
+      }
+      .loader-bar {
+        width: 180px; height: 2px; margin-top: 16px; border-radius: 2px;
+        background: rgba(18, 48, 77, 0.12); overflow: hidden;
+      }
+      .loader-bar span { display: block; height: 100%; width: 0%; background: #1c6cb8; }
+    </style>
+    <link rel="stylesheet" href="/src/style.css" />
+
+    <title>Azure Integration Specialist &amp; AI Engineer | Mayank Gupta</title>
+    <meta
+      name="description"
+      content="Mayank Gupta — Azure Integration Specialist with 7+ years building enterprise-scale, event-driven solutions using Azure Functions, Logic Apps, Service Bus, API Management and .NET, plus full-stack app development (Optimizely CMS, TypeScript, iOS) and agentic AI on Microsoft Foundry."
+    />
+    <meta name="author" content="Mayank Gupta" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://mayankcloud.com/" />
+
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content="https://mayankcloud.com/" />
+    <meta property="og:site_name" content="Mayank Gupta" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="profile:first_name" content="Mayank" />
+    <meta property="profile:last_name" content="Gupta" />
+    <meta property="og:title" content="Azure Integration Specialist &amp; AI Engineer | Mayank Gupta" />
+    <meta
+      property="og:description"
+      content="7+ years designing enterprise-scale Azure integration platforms — Azure Functions, Logic Apps, Service Bus, API Management, .NET — and AI-native systems with Microsoft Foundry, Azure OpenAI and MCP."
+    />
+    <meta property="og:image" content="https://mayankcloud.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Azure Integration Specialist &amp; AI Engineer | Mayank Gupta" />
+    <meta
+      name="twitter:description"
+      content="7+ years building event-driven Azure integration platforms and agentic AI systems. Azure Functions, Logic Apps, Service Bus, APIM, .NET, Microsoft Foundry."
+    />
+    <meta name="twitter:image" content="https://mayankcloud.com/og-image.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://mayankcloud.com/#person",
+            "name": "Mayank Gupta",
+            "givenName": "Mayank",
+            "familyName": "Gupta",
+            "url": "https://mayankcloud.com/",
+            "email": "mailto:mayankgupta7673@gmail.com",
+            "jobTitle": "Azure Integration Specialist & AI Engineer",
+            "description": "Azure Integration Specialist with 7+ years of experience designing, building and delivering enterprise-scale, event-driven solutions on Microsoft Azure using .NET, Node.js, Python and REST APIs, plus full-stack application delivery across Optimizely CMS, TypeScript and iOS, with hands-on GenAI and agentic AI delivery.",
+            "sameAs": ["https://www.linkedin.com/in/mayankgupta7673/"],
+            "worksFor": { "@type": "Organization", "name": "Capgemini" },
+            "alumniOf": { "@type": "CollegeOrUniversity", "name": "Integral University, Lucknow" },
+            "knowsAbout": [
+              "Azure Integration Services",
+              "Azure Functions",
+              "Azure Logic Apps",
+              "Azure Service Bus",
+              "Azure API Management",
+              "Event-Driven Architecture",
+              "Dynamics 365 Integration",
+              "Microsoft Entra ID",
+              "Azure DevOps",
+              "Infrastructure as Code",
+              "Azure OpenAI",
+              "Microsoft Foundry",
+              "Agentic AI",
+              "Retrieval-Augmented Generation",
+              "MCP Servers",
+              "Optimizely CMS",
+              "iOS App Development",
+              "Full-Stack Development",
+              ".NET",
+              "C#",
+              "Node.js",
+              "Python"
+            ],
+            "hasCredential": [
+              { "@type": "EducationalOccupationalCredential", "name": "Microsoft Certified: Azure Solutions Architect Expert (AZ-305)", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Microsoft" } },
+              { "@type": "EducationalOccupationalCredential", "name": "Microsoft Certified: DevOps Engineer Expert (AZ-400)", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Microsoft" } },
+              { "@type": "EducationalOccupationalCredential", "name": "Microsoft Certified: Azure Developer Associate (AZ-204)", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Microsoft" } },
+              { "@type": "EducationalOccupationalCredential", "name": "Microsoft Certified: Azure Administrator Associate (AZ-104)", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Microsoft" } },
+              { "@type": "EducationalOccupationalCredential", "name": "Microsoft Certified: Fabric Analytics Engineer Associate (DP-600)", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Microsoft" } },
+              { "@type": "EducationalOccupationalCredential", "name": "Microsoft Certified: Power Platform Functional Consultant Associate (PL-200)", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Microsoft" } },
+              { "@type": "EducationalOccupationalCredential", "name": "AWS Certified Cloud Practitioner", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "Amazon Web Services" } },
+              { "@type": "EducationalOccupationalCredential", "name": "CompTIA IT Fundamentals", "credentialCategory": "certification", "recognizedBy": { "@type": "Organization", "name": "CompTIA" } }
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://mayankcloud.com/#website",
+            "url": "https://mayankcloud.com/",
+            "name": "Mayank Gupta — Azure Integration Specialist & AI Engineer",
+            "description": "Portfolio of Mayank Gupta, an Azure Integration Specialist and AI Engineer specialising in event-driven Azure integration platforms and agentic AI.",
+            "publisher": { "@id": "https://mayankcloud.com/#person" },
+            "inLanguage": "en-US"
+          },
+          {
+            "@type": "ProfilePage",
+            "@id": "https://mayankcloud.com/#profilepage",
+            "url": "https://mayankcloud.com/",
+            "mainEntity": { "@id": "https://mayankcloud.com/#person" },
+            "isPartOf": { "@id": "https://mayankcloud.com/#website" }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body class="is-loading">
+    <div class="scroll-progress" data-scroll-progress aria-hidden="true"><span></span></div>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="loader" data-loader>
+      <div>
+        <div class="loader-mark"><span>MAYANK GUPTA</span></div>
+        <div class="loader-bar"><span data-loader-bar></span></div>
+      </div>
+    </div>
+
+    <div class="grain" aria-hidden="true"></div>
+    <div class="companion" data-companion aria-hidden="true"></div>
+    <div class="cursor-dot" data-cursor-dot aria-hidden="true"></div>
+    <div class="cursor-ring" data-cursor-ring aria-hidden="true"></div>
+
+    <header class="site-header" data-header>
+      <div class="container header-inner">
+        <a href="#home" class="logo">Mayank Gupta</a>
+        <div class="header-right">
+          <nav class="nav-pill" aria-label="Primary">
+            <a href="#about" data-nav-link>About</a>
+            <a href="#work" data-nav-link>Work</a>
+            <a href="#skills" data-nav-link>Skills</a>
+            <a href="#contact" data-nav-link>Contact</a>
+          </nav>
+          <a href="https://www.linkedin.com/in/mayankgupta7673/" target="_blank" rel="noopener" class="header-link">LinkedIn</a>
+          <a class="resume-btn" href="/resume/Resume_Mayank_7Yrs_Azure_Integration.pdf" download data-magnetic>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 18v2h16v-2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            Resume
+          </a>
+        </div>
+        <button class="menu-toggle" data-menu-toggle aria-expanded="false" aria-controls="mobile-nav">
+          <span></span><span></span><span></span>
+          <span class="visually-hidden">Toggle menu</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="mobile-nav" id="mobile-nav" data-mobile-nav>
+      <nav aria-label="Mobile">
+        <a href="#about" data-nav-link>About</a>
+        <a href="#journey" data-nav-link>Journey</a>
+        <a href="#work" data-nav-link>Work</a>
+        <a href="#skills" data-nav-link>Skills</a>
+        <a href="#contact" data-nav-link>Contact</a>
+        <a href="/resume/Resume_Mayank_7Yrs_Azure_Integration.pdf" download>Resume &darr;</a>
+      </nav>
+      <div class="mobile-nav-footer">
+        <a href="mailto:mayankgupta7673@gmail.com">mayankgupta7673@gmail.com</a>
+        <span>&copy; <span data-year></span></span>
+      </div>
+    </div>
+
+    <main id="main">
+      <!-- ============ HERO ============ -->
+      <section id="home" class="hero hero--character">
+        <div class="hero-media" data-hero-media>
+          <img src="/images/night-desk.svg" alt="Stylised night scene: working at a desk by warm lamp light" fetchpriority="high" />
+        </div>
+
+        <div class="hero-top">
+          <div class="container">
+            <p class="hero-kicker" data-hero-kicker>Azure Integration <span>&amp; AI</span></p>
+          </div>
+        </div>
+
+        <div class="hero-name" data-hero-name>
+          <span class="hero-name-part">Mayank</span>
+          <span class="hero-name-part">Gupta</span>
+        </div>
+
+        <div class="container">
+          <div class="hero-meta">
+            <p class="hero-sub" data-hero-sub>
+              Azure Integration Specialist with 7+ years building enterprise-scale, event-driven
+              platforms on Azure &mdash; and AI-native systems with Microsoft Foundry and Azure
+              OpenAI.
+            </p>
+            <div class="hero-actions" data-hero-actions>
+              <a href="#work" class="btn btn-primary" data-magnetic>View my work</a>
+              <a href="/resume/Resume_Mayank_7Yrs_Azure_Integration.pdf" download class="btn btn-ghost" data-magnetic>Download resume</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="scroll-cue">
+          <svg class="mouse-icon" width="22" height="34" viewBox="0 0 22 34" fill="none" aria-hidden="true">
+            <rect x="1.2" y="1.2" width="19.6" height="31.6" rx="9.8" stroke="currentColor" stroke-width="2.2"/>
+            <rect class="mouse-wheel" x="9.6" y="7.5" width="2.8" height="7" rx="1.4" fill="currentColor"/>
+          </svg>
+          <span>Scroll to explore</span>
+        </div>
+      </section>
+
+      <!-- ============ MARQUEE ============ -->
+      <div class="marquee" aria-hidden="true">
+        <div class="marquee-track" data-marquee-track>
+          <span>Azure Functions</span><span>&mdash;</span>
+          <span>Logic Apps</span><span>&mdash;</span>
+          <span>Service Bus</span><span>&mdash;</span>
+          <span>API Management</span><span>&mdash;</span>
+          <span>Microsoft Foundry</span><span>&mdash;</span>
+          <span>Optimizely CMS</span><span>&mdash;</span>
+          <span>iOS</span><span>&mdash;</span>
+        </div>
+      </div>
+
+      <!-- ============ STATEMENT ============ -->
+      <section class="statement">
+        <div class="container">
+          <p class="statement-text" data-statement>
+            I connect enterprise systems that were never meant to talk to each other.
+          </p>
+        </div>
+      </section>
+
+      <!-- ============ ABOUT ============ -->
+      <section id="about">
+        <div class="container about-grid">
+          <div class="about-photo reveal" data-reveal>
+            <div class="about-photo-glow" aria-hidden="true"></div>
+            <img class="about-portrait" src="/images/profile-cutout.png"
+                 alt="Mayank Gupta, Azure Integration Specialist and AI Engineer" />
+          </div>
+          <div class="about-content">
+            <p class="eyebrow reveal" data-reveal>About</p>
+            <p class="reveal" data-reveal>
+              I'm Mayank Gupta, an Azure Integration Specialist with 7+ years designing and
+              delivering enterprise-scale, event-driven solutions on Microsoft Azure using .NET,
+              Node.js, Python and REST APIs &mdash; specialising in Azure Functions, Logic Apps,
+              Service Bus, API Management and CI/CD with Azure DevOps.
+            </p>
+            <p class="reveal" data-reveal>
+              Most of my work makes Dynamics 365, on-premise systems and third-party platforms
+              talk to each other securely and reliably. Alongside that I've delivered full-stack
+              application work &mdash; an Optimizely CMS platform in TypeScript and native iOS
+              development for a Canada-based client. Lately the focus has moved to GenAI and
+              agentic AI &mdash; RAG solutions, Azure OpenAI, Microsoft Foundry multi-agent
+              systems and MCP servers.
+            </p>
+            <ul class="about-checklist">
+              <li class="reveal" data-reveal>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Event-driven Azure integration &mdash; Functions, Logic Apps, Service Bus, APIM</span>
+              </li>
+              <li class="reveal" data-reveal>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Zero-trust security with Managed Identity, Entra ID and Key Vault</span>
+              </li>
+              <li class="reveal" data-reveal>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Resilience patterns &mdash; retry, circuit breaker, dead-letter, replay</span>
+              </li>
+              <li class="reveal" data-reveal>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Agentic AI on Microsoft Foundry, Azure OpenAI and MCP servers</span>
+              </li>
+              <li class="reveal" data-reveal>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M4 10.5L8 14.5L16 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <span>Full-stack app delivery &mdash; Optimizely CMS, TypeScript and iOS</span>
+              </li>
+            </ul>
+            <div class="about-awards">
+              <span class="award reveal" data-reveal>WOW Award &mdash; Capgemini</span>
+              <span class="award reveal" data-reveal>Live Wire Achievement Award</span>
+              <span class="award reveal" data-reveal>HCL Achievers Award</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CLOUD FOOTPRINT / GLOBE ============ -->
+      <section id="reach" class="globe-section">
+        <div class="shape-field" data-shape-field aria-hidden="true"></div>
+        <div class="container globe-layout">
+          <div>
+            <p class="eyebrow reveal" data-reveal>Cloud Footprint</p>
+            <h2 class="section-title reveal" data-reveal>Azure-first, cloud-fluent.</h2>
+            <p class="section-lede reveal" data-reveal>
+              Primary depth in Microsoft Azure, with AWS Cloud Practitioner certification and
+              multi-cloud exposure. Drag the globe to explore.
+            </p>
+            <div class="globe-regions">
+              <span class="tag reveal" data-reveal>Azure Functions</span>
+              <span class="tag reveal" data-reveal>Logic Apps</span>
+              <span class="tag reveal" data-reveal>Service Bus</span>
+              <span class="tag reveal" data-reveal>API Management</span>
+              <span class="tag reveal" data-reveal>Azure DevOps</span>
+              <span class="tag reveal" data-reveal>Microsoft Foundry</span>
+            </div>
+            <div class="stats-strip">
+              <div class="stat reveal" data-reveal>
+                <div class="stat-num-wrap"><span data-counter="7">0</span><span class="stat-suffix">+</span></div>
+                <span class="stat-label">Years experience</span>
+              </div>
+              <div class="stat reveal" data-reveal>
+                <div class="stat-num-wrap"><span data-counter="8">0</span></div>
+                <span class="stat-label">Certifications</span>
+              </div>
+              <div class="stat reveal" data-reveal>
+                <div class="stat-num-wrap"><span data-counter="15">0</span><span class="stat-suffix">+</span></div>
+                <span class="stat-label">Apps modernised</span>
+              </div>
+            </div>
+          </div>
+          <div class="globe-stage" data-globe>
+            <p class="globe-hint">Drag to rotate</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ JOURNEY ============ -->
+      <section id="journey" class="journey">
+        <div class="container journey-head">
+          <p class="eyebrow reveal" data-reveal>Career Journey</p>
+        </div>
+        <div class="journey-track" data-journey>
+          <div class="journey-inner">
+            <div class="journey-col-text">
+
+              <div class="journey-chapter" data-chapter>
+                <div class="journey-chapter-inner">
+                  <div class="journey-year" aria-hidden="true">2018</div>
+                  <div>
+                    <p class="journey-role">Trainee &middot; HCL Technologies</p>
+                    <h3 class="journey-title">Foundations</h3>
+                    <p class="journey-desc">
+                      Started in .NET application development, learning the full software
+                      development lifecycle end to end &mdash; requirement analysis, design,
+                      coding, testing and maintenance.
+                    </p>
+                    <div class="journey-tags">
+                      <span class="tag">C#</span><span class="tag">.NET</span><span class="tag">SQL Server</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="journey-chapter" data-chapter>
+                <div class="journey-chapter-inner">
+                  <div class="journey-year" aria-hidden="true">2019</div>
+                  <div>
+                    <p class="journey-role">Software Engineer &middot; HCL Technologies</p>
+                    <h3 class="journey-title">Modernisation</h3>
+                    <p class="journey-desc">
+                      Migrated a legacy reporting system from WebFocus to .NET and SSRS, and
+                      orchestrated the migration of 15+ applications from ColdFusion 2011 to
+                      ColdFusion 2018.
+                    </p>
+                    <div class="journey-tags">
+                      <span class="tag">SSRS</span><span class="tag">ColdFusion</span><span class="tag">Migration</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="journey-chapter" data-chapter>
+                <div class="journey-chapter-inner">
+                  <div class="journey-year" aria-hidden="true">2021</div>
+                  <div>
+                    <p class="journey-role">Senior Software Engineer &middot; HCL Technologies</p>
+                    <h3 class="journey-title">Pipelines &amp; Ownership</h3>
+                    <p class="journey-desc">
+                      Built CI/CD pipelines with VSTS and Azure, owned installation and
+                      configuration, and coordinated change management across development and
+                      deployment teams.
+                    </p>
+                    <div class="journey-tags">
+                      <span class="tag">CI/CD</span><span class="tag">VSTS</span><span class="tag">Azure</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="journey-chapter" data-chapter>
+                <div class="journey-chapter-inner">
+                  <div class="journey-year" aria-hidden="true">2022</div>
+                  <div>
+                    <p class="journey-role">Senior Cloud Engineer &middot; MySense Technologies</p>
+                    <h3 class="journey-title">Into the Cloud</h3>
+                    <p class="journey-desc">
+                      Built .NET applications, Azure Functions, Logic Apps and APIM; provisioned
+                      infrastructure as code with ARM and migrated on-premise applications to
+                      Azure IaaS and PaaS.
+                    </p>
+                    <div class="journey-tags">
+                      <span class="tag">Azure Functions</span><span class="tag">ARM</span><span class="tag">Azure DevOps</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="journey-chapter" data-chapter>
+                <div class="journey-chapter-inner">
+                  <div class="journey-year" aria-hidden="true">2024</div>
+                  <div>
+                    <p class="journey-role">Senior Consultant &middot; Capgemini</p>
+                    <h3 class="journey-title">Architect &amp; Lead Engineer</h3>
+                    <p class="journey-desc">
+                      Owning the full lifecycle of an enterprise-scale Dynamics 365 F&amp;O
+                      integration platform &mdash; solution architecture, .NET 10 development,
+                      infrastructure and APIM across multiple domains.
+                    </p>
+                    <div class="journey-tags">
+                      <span class="tag">Dynamics 365 F&amp;O</span><span class="tag">APIM</span><span class="tag">.NET 10</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="journey-chapter" data-chapter>
+                <div class="journey-chapter-inner">
+                  <div class="journey-year" aria-hidden="true">Now</div>
+                  <div>
+                    <p class="journey-role">AI-Native Integration</p>
+                    <h3 class="journey-title">Agentic Systems</h3>
+                    <p class="journey-desc">
+                      Architecting an AI-native Auto Heal platform on Microsoft Foundry
+                      multi-agent orchestration, GPT-4o, an MCP tool server and Azure AI Search
+                      &mdash; to autonomously detect, diagnose and heal Service Bus failures.
+                    </p>
+                    <div class="journey-tags">
+                      <span class="tag">Microsoft Foundry</span><span class="tag">MCP</span><span class="tag">Azure AI Search</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="journey-col-stage">
+              <div class="journey-stage" data-journey-stage aria-hidden="true"></div>
+            </div>
+          </div>
+          <div class="journey-index" data-journey-index>
+            <span class="journey-index-label"><span class="current">01</span> / 06</span>
+            <div class="journey-dots">
+            <button class="journey-dot is-active" data-journey-dot="0" aria-label="Jump to 2018 — Foundations"><span>1</span></button>
+            <button class="journey-dot" data-journey-dot="1" aria-label="Jump to 2019 — Modernisation"><span>2</span></button>
+            <button class="journey-dot" data-journey-dot="2" aria-label="Jump to 2021 — Pipelines & Ownership"><span>3</span></button>
+            <button class="journey-dot" data-journey-dot="3" aria-label="Jump to 2022 — Into the Cloud"><span>4</span></button>
+            <button class="journey-dot" data-journey-dot="4" aria-label="Jump to 2024 — Architect & Lead Engineer"><span>5</span></button>
+            <button class="journey-dot" data-journey-dot="5" aria-label="Jump to Now — Agentic Systems"><span>6</span></button>
+            </div>
+          </div>
+          <div class="journey-progress"><div class="journey-progress-bar" data-journey-progress></div></div>
+        </div>
+      </section>
+
+      <!-- ============ WORK ============ -->
+      <section id="work">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow reveal" data-reveal>Selected Work</p>
+            <h2 class="section-title reveal" data-reveal>Built for scale.</h2>
+          </div>
+          <div class="projects-grid">
+            <article class="project-card reveal" data-reveal>
+              <div class="project-thumb"><img src="/images/az-ai.jpg" alt="AI-native auto heal platform" loading="lazy" /></div>
+              <div class="project-body">
+                <span class="project-client">Capgemini</span>
+                <h3>AI-Native Auto Heal Platform</h3>
+                <p class="project-summary">
+                  Architected a multi-agent system on Microsoft Foundry with GPT-4o, an MCP tool
+                  server and Azure AI Search that autonomously detects, diagnoses and heals
+                  Service Bus failures.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">Microsoft Foundry</span><span class="tag">GPT-4o</span><span class="tag">MCP</span>
+                </div>
+                <div class="project-metric"><strong>MTTR</strong><span>hours &rarr; minutes (target)</span></div>
+              </div>
+            </article>
+
+            <article class="project-card reveal" data-reveal>
+              <div class="project-thumb"><img src="/images/az-network.jpg" alt="Dynamics 365 integration platform" loading="lazy" /></div>
+              <div class="project-body">
+                <span class="project-client">Capgemini</span>
+                <h3>Dynamics 365 F&amp;O Integration Platform</h3>
+                <p class="project-summary">
+                  Architect and lead engineer for an enterprise-scale platform connecting
+                  Dynamics 365 F&amp;O with external systems &mdash; owning solution architecture,
+                  .NET 10 development, infrastructure and APIM.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">Azure Functions</span><span class="tag">Service Bus</span><span class="tag">APIM</span>
+                </div>
+                <div class="project-metric"><strong>Multi-domain</strong><span>async write at scale</span></div>
+              </div>
+            </article>
+
+            <article class="project-card reveal" data-reveal>
+              <div class="project-thumb"><img src="/images/az-circuit.jpg" alt="Resilient integration patterns" loading="lazy" /></div>
+              <div class="project-body">
+                <span class="project-client">Capgemini</span>
+                <h3>Resilience &amp; Reconciliation Layer</h3>
+                <p class="project-summary">
+                  Implemented Polly v8 retry, circuit breaker and timeout patterns with
+                  centralised error handling, dead-letter and replay flows, plus a background
+                  reconciliation poller for guaranteed status consistency.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">Polly v8</span><span class="tag">Dead-letter</span><span class="tag">Replay</span>
+                </div>
+                <div class="project-metric"><strong>Zero-trust</strong><span>Managed Identity + Entra ID</span></div>
+              </div>
+            </article>
+
+            <article class="project-card reveal" data-reveal>
+              <div class="project-thumb"><img src="/images/az-ops.jpg" alt="Cloud migration and infrastructure as code" loading="lazy" /></div>
+              <div class="project-body">
+                <span class="project-client">MySense Technologies</span>
+                <h3>On-Premise to Azure Migration</h3>
+                <p class="project-summary">
+                  Designed and provisioned infrastructure as code with ARM, migrating on-premise
+                  applications to Azure IaaS and PaaS, with architecture, data flow and sequence
+                  documentation throughout.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">ARM</span><span class="tag">IaaS / PaaS</span><span class="tag">Azure DevOps</span>
+                </div>
+                <div class="project-metric"><strong>IaC</strong><span>repeatable provisioning</span></div>
+              </div>
+            </article>
+
+            <article class="project-card reveal" data-reveal>
+              <div class="project-thumb"><img src="/images/az-datacenter.jpg" alt="Legacy reporting modernisation" loading="lazy" /></div>
+              <div class="project-body">
+                <span class="project-client">HCL Technologies</span>
+                <h3>Legacy Reporting Modernisation</h3>
+                <p class="project-summary">
+                  Migrated a legacy reporting system from WebFocus to .NET and SQL Server
+                  Reporting Services, and orchestrated the migration of 15+ applications from
+                  ColdFusion 2011 to ColdFusion 2018.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">.NET</span><span class="tag">SSRS</span><span class="tag">ColdFusion</span>
+                </div>
+                <div class="project-metric"><strong>15+</strong><span>applications migrated</span></div>
+              </div>
+            </article>
+
+            <article class="project-card reveal" data-reveal>
+              <div class="project-thumb"><img src="/images/az-ops.jpg" alt="Full-stack CMS and mobile delivery" loading="lazy" /></div>
+              <div class="project-body">
+                <span class="project-client">Canada-based Client</span>
+                <h3>Optimizely CMS &amp; iOS Delivery</h3>
+                <p class="project-summary">
+                  Full-stack engagement spanning an Optimizely CMS build in TypeScript and
+                  native iOS app development &mdash; owning both the web platform and the
+                  mobile experience end to end.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">Optimizely CMS</span><span class="tag">TypeScript</span><span class="tag">iOS</span>
+                </div>
+                <div class="project-metric"><strong>Full-stack</strong><span>web + mobile</span></div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ RING GALLERY ============ -->
+      <section id="gallery" class="ring-section">
+        <div class="ring-track" data-ring-track>
+          <div class="ring-stage" data-ring aria-hidden="true"></div>
+          <div class="ring-overlay">
+            <h2>Seven years, one throughline.</h2>
+            <p>Systems that talk to each other &mdash; securely, reliably, at enterprise scale.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SKILLS ============ -->
+      <section id="skills">
+        <div class="container">
+          <div class="section-head">
+            <p class="eyebrow reveal" data-reveal>Toolbox</p>
+            <h2 class="section-title reveal" data-reveal>The stack.</h2>
+          </div>
+          <div class="skills-grid">
+            <div class="skill-card reveal" data-reveal>
+              <div class="skill-head">
+                <span class="skill-icon"><img src="/icons/functions.svg" alt="" aria-hidden="true" /></span>
+                <h3>Azure Integration Services</h3>
+              </div>
+              <div class="skill-chips">
+                <span class="skill-chip">Azure Functions</span><span class="skill-chip">Logic Apps</span><span class="skill-chip">Service Bus</span><span class="skill-chip">API Management</span><span class="skill-chip">Web Jobs</span><span class="skill-chip">Azure Storage</span><span class="skill-chip">App Service</span><span class="skill-chip">ARM</span>
+              </div>
+            </div>
+            <div class="skill-card reveal" data-reveal>
+              <div class="skill-head">
+                <span class="skill-icon"><img src="/icons/ai.svg" alt="" aria-hidden="true" /></span>
+                <h3>AI &amp; GenAI</h3>
+              </div>
+              <div class="skill-chips">
+                <span class="skill-chip">Azure OpenAI</span><span class="skill-chip">Microsoft Foundry</span><span class="skill-chip">MCP Servers</span><span class="skill-chip">Agentic Development</span><span class="skill-chip">RAG</span><span class="skill-chip">Azure AI Search</span>
+              </div>
+            </div>
+            <div class="skill-card reveal" data-reveal>
+              <div class="skill-head">
+                <span class="skill-icon"><img src="/icons/cicd.svg" alt="" aria-hidden="true" /></span>
+                <h3>DevOps &amp; Observability</h3>
+              </div>
+              <div class="skill-chips">
+                <span class="skill-chip">Azure DevOps</span><span class="skill-chip">GitHub</span><span class="skill-chip">Bicep</span><span class="skill-chip">Docker</span><span class="skill-chip">Application Insights</span><span class="skill-chip">Azure Monitor</span><span class="skill-chip">Log Analytics</span><span class="skill-chip">KQL</span>
+              </div>
+            </div>
+            <div class="skill-card reveal" data-reveal>
+              <div class="skill-head">
+                <span class="skill-icon"><img src="/icons/dotnet.svg" alt="" aria-hidden="true" /></span>
+                <h3>Languages &amp; Web</h3>
+              </div>
+              <div class="skill-chips">
+                <span class="skill-chip">C#</span><span class="skill-chip">.NET Core</span><span class="skill-chip">ASP.NET MVC</span><span class="skill-chip">Node.js</span><span class="skill-chip">Python</span><span class="skill-chip">RESTful APIs</span><span class="skill-chip">PowerShell</span>
+              </div>
+            </div>
+            <div class="skill-card reveal" data-reveal>
+              <div class="skill-head">
+                <span class="skill-icon"><img src="/icons/apps.svg" alt="" aria-hidden="true" /></span>
+                <h3>Apps &amp; CMS</h3>
+              </div>
+              <div class="skill-chips">
+                <span class="skill-chip">Optimizely CMS</span><span class="skill-chip">TypeScript</span><span class="skill-chip">iOS App Development</span><span class="skill-chip">Full-Stack Delivery</span><span class="skill-chip">React</span>
+              </div>
+            </div>
+            <div class="skill-card reveal" data-reveal>
+              <div class="skill-head">
+                <span class="skill-icon"><img src="/icons/data.svg" alt="" aria-hidden="true" /></span>
+                <h3>Data &amp; Reporting</h3>
+              </div>
+              <div class="skill-chips">
+                <span class="skill-chip">Azure Data Factory</span><span class="skill-chip">SQL Server</span><span class="skill-chip">Oracle 12c</span><span class="skill-chip">SSRS</span><span class="skill-chip">Power BI</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-head" style="margin-top: clamp(56px, 7vw, 90px)">
+            <p class="eyebrow reveal" data-reveal>Certifications</p>
+            <h2 class="section-title reveal" data-reveal>Certified.</h2>
+          </div>
+          <div class="cert-row">
+            <div class="cert-chip reveal" data-reveal><span class="code">AZ-305</span><span class="name">Azure Solutions Architect Expert</span></div>
+            <div class="cert-chip reveal" data-reveal><span class="code">AZ-400</span><span class="name">DevOps Engineer Expert</span></div>
+            <div class="cert-chip reveal" data-reveal><span class="code">AZ-204</span><span class="name">Azure Developer Associate</span></div>
+            <div class="cert-chip reveal" data-reveal><span class="code">AZ-104</span><span class="name">Azure Administrator Associate</span></div>
+            <div class="cert-chip reveal" data-reveal><span class="code">DP-600</span><span class="name">Fabric Analytics Engineer Associate</span></div>
+            <div class="cert-chip reveal" data-reveal><span class="code">PL-200</span><span class="name">Power Platform Functional Consultant</span></div>
+            <div class="cert-chip reveal" data-reveal><span class="code">AWS</span><span class="name">Certified Cloud Practitioner</span></div>
+            <div class="cert-chip reveal" data-reveal><span class="code">CompTIA</span><span class="name">IT Fundamentals</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ CONTACT ============ -->
+      <section id="contact" class="contact">
+        <div class="container contact-inner">
+          <p class="eyebrow reveal" data-reveal>Contact</p>
+          <h2 class="contact-title reveal" data-reveal>Let's build something that scales</h2>
+          <p class="contact-lede reveal" data-reveal>
+            Azure integration, cloud architecture, or an AI-native platform &mdash;
+            drop me a line.
+          </p>
+
+          <a class="contact-email reveal" data-reveal href="mailto:mayankgupta7673@gmail.com" data-magnetic>
+            mayankgupta7673@gmail.com
+          </a>
+
+          <div class="contact-actions reveal" data-reveal>
+            <a class="btn btn-primary" href="mailto:mayankgupta7673@gmail.com" data-magnetic>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M4 6h16v12H4V6Zm0 0 8 7 8-7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Email me
+            </a>
+            <a class="btn btn-ghost" href="https://www.linkedin.com/in/mayankgupta7673/" target="_blank" rel="noopener" data-magnetic>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.78 2.5 4.78 5.75V21h-4v-5.6c0-1.34-.02-3.06-1.86-3.06-1.87 0-2.16 1.44-2.16 2.96V21h-4V9Z"/>
+              </svg>
+              LinkedIn
+            </a>
+            <a class="btn btn-ghost" href="/resume/Resume_Mayank_7Yrs_Azure_Integration.pdf" download data-magnetic>
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M12 3v12m0 0 4.5-4.5M12 15l-4.5-4.5M4 18v2h16v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              Resume
+            </a>
+          </div>
+
+          <div class="availability reveal" data-reveal><span class="dot"></span>Open to new opportunities</div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <img class="footer-figure" src="/coder.svg" alt="" aria-hidden="true" />
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <a href="#home" class="logo">Mayank Gupta</a>
+            <p>
+              Azure Integration Specialist &amp; AI Engineer building event-driven platforms and
+              agentic systems on Microsoft Azure.
+            </p>
+          </div>
+          <div class="footer-links">
+            <div class="footer-col">
+              <h3>Explore</h3>
+              <a href="#about">About</a>
+              <a href="#journey">Journey</a>
+              <a href="#work">Work</a>
+              <a href="#skills">Skills</a>
+              <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-col">
+              <h3>Elsewhere</h3>
+              <a href="https://www.linkedin.com/in/mayankgupta7673/" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="mailto:mayankgupta7673@gmail.com">Email</a>
+              <a href="/resume/Resume_Mayank_7Yrs_Azure_Integration.pdf" download>Resume (PDF)</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>&copy; <span data-year></span> Mayank Gupta</span>
+          <span>Built with Three.js, GSAP, Lenis &amp; TypeScript</span>
+          <a href="#home" class="back-to-top" data-magnetic>Back to top &uarr;</a>
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

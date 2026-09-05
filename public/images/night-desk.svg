@@ -1,0 +1,208 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" fill="none" role="img"
+     aria-label="Stylised night scene: a developer with a mustache and headphones working at a desk by warm lamp light">
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1b3d5a"/>
+      <stop offset="1" stop-color="#091a2b"/>
+    </linearGradient>
+    <radialGradient id="lampGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#cfefff" stop-opacity="0.85"/>
+      <stop offset="0.45" stop-color="#63d6f7" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#2b8ae0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="screenGlow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#9fe4ff" stop-opacity="0.72"/>
+      <stop offset="1" stop-color="#4aa3e0" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="skinTone" x1="700" y1="330" x2="900" y2="520" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#bd8560"/>
+      <stop offset="1" stop-color="#84543a"/>
+    </linearGradient>
+    <linearGradient id="deskTop" x1="0" y1="760" x2="0" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#245073"/>
+      <stop offset="1" stop-color="#0f2740"/>
+    </linearGradient>
+    <linearGradient id="monitorBack" x1="560" y1="560" x2="1040" y2="820" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1f4663"/>
+      <stop offset="1" stop-color="#0e2439"/>
+    </linearGradient>
+    <linearGradient id="couch" x1="0" y1="520" x2="0" y2="820" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1c4160"/>
+      <stop offset="1" stop-color="#0d2740"/>
+    </linearGradient>
+    <radialGradient id="vig" cx="0.5" cy="0.5" r="0.75">
+      <stop offset="0.55" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#04101c" stop-opacity="0.6"/>
+    </radialGradient>
+  </defs>
+
+  <!-- room -->
+  <rect width="1600" height="1000" fill="url(#wall)"/>
+
+  <!-- ambient warm pools -->
+  <ellipse cx="1270" cy="430" rx="430" ry="400" fill="url(#lampGlow)"/>
+  <ellipse cx="800" cy="640" rx="520" ry="330" fill="url(#screenGlow)" opacity="0.5"/>
+
+  <!-- framed art on the wall -->
+  <g opacity="0.92">
+    <g>
+      <rect x="392" y="150" width="132" height="168" rx="4" fill="#102a42" />
+      <rect x="392" y="150" width="132" height="168" rx="4" fill="#122e47" stroke="#2d5b81" stroke-width="5"/>
+      <g stroke="#63d6f7" stroke-width="3" opacity="0.75" fill="none">
+        <circle cx="438" cy="205" r="14"/><path d="M412 280l32-46 26 32 20-22 24 36z"/>
+        <path d="M470 190h30M470 205h22"/>
+      </g>
+    </g>
+    <g>
+      <rect x="556" y="112" width="112" height="140" rx="4" fill="#122e47" stroke="#2d5b81" stroke-width="5"/>
+      <g stroke="#63d6f7" stroke-width="3" opacity="0.7" fill="none">
+        <path d="M574 224l26-52 22 30 18-20 26 42z"/><circle cx="600" cy="150" r="11"/>
+      </g>
+    </g>
+    <g>
+      <rect x="556" y="272" width="112" height="120" rx="4" fill="#122e47" stroke="#2d5b81" stroke-width="5"/>
+      <g stroke="#63d6f7" stroke-width="3" opacity="0.7" fill="none">
+        <rect x="580" y="300" width="64" height="64" rx="6"/><path d="M580 340h64"/>
+      </g>
+    </g>
+    <g>
+      <rect x="700" y="96" width="176" height="212" rx="4" fill="#122e47" stroke="#2d5b81" stroke-width="6"/>
+      <g stroke="#7fd8ff" stroke-width="3.5" opacity="0.8" fill="none">
+        <path d="M726 286c0-70 26-118 62-118s62 48 62 118"/>
+        <path d="M788 168v118M752 214h72M740 250h96"/>
+      </g>
+    </g>
+    <g>
+      <rect x="908" y="150" width="128" height="150" rx="4" fill="#122e47" stroke="#2d5b81" stroke-width="5"/>
+      <g stroke="#63d6f7" stroke-width="3" opacity="0.72" fill="none">
+        <circle cx="948" cy="196" r="15"/><circle cx="996" cy="196" r="15"/>
+        <path d="M934 268c10-26 26-38 38-38s28 12 38 38"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- couch behind -->
+  <path d="M300 700c0-70 34-110 96-110h808c62 0 96 40 96 110v120H300z" fill="url(#couch)"/>
+  <path d="M300 700c0-70 34-110 96-110h808c62 0 96 40 96 110" fill="none" stroke="#2b5a7d" stroke-width="4" opacity="0.6"/>
+  <rect x="252" y="660" width="80" height="160" rx="26" fill="#17384f"/>
+  <rect x="1268" y="660" width="80" height="160" rx="26" fill="#17384f"/>
+
+  <!-- character: torso, head, hair, glasses, headphones -->
+  <g transform="translate(0 -110) translate(800 620) scale(0.62) translate(-800 -620)">
+    <!-- torso / hoodie -->
+    <path d="M614 830c0-104 78-166 186-166s186 62 186 166z" fill="#1c3f5c"/>
+    <path d="M700 700c22 34 58 52 100 52s78-18 100-52" fill="none" stroke="#2a5677" stroke-width="6"/>
+    <!-- neck -->
+    <rect x="762" y="556" width="76" height="112" rx="34" fill="#84543a"/>
+    <!-- head group: nods along to whatever is in the headphones -->
+    <g>
+      <animateTransform attributeName="transform" type="rotate"
+        values="-2.8 800 590; 2.8 800 590; -2.8 800 590" dur="1.75s"
+        calcMode="spline" keyTimes="0;0.5;1" keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"
+        repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="translate"
+        values="0 0; 0 -9; 0 0" dur="0.875s"
+        calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1; 0.4 0 0.6 1"
+        repeatCount="indefinite" additive="sum"/>
+    <!-- head: narrower/more oval than a plain circle, defined jaw -->
+    <path d="M800 330c62 0 106 46 112 112 4 46-2 92-24 130-20 34-50 54-88 54s-68-20-88-54c-22-38-28-84-24-130 6-66 50-112 112-112z" fill="url(#skinTone)"/>
+    <!-- warm screen light on the face -->
+    <ellipse cx="800" cy="516" rx="112" ry="100" fill="#8fd9ff" opacity="0.2"/>
+    <!-- hair: side part, swept across, temples receding slightly (mirrors the photo) -->
+    <path d="M670 452c-6-32-4-64 10-92 22-46 66-74 120-74 56 0 100 30 122 78 12 26 14 56 8 86-6-18-18-32-36-40 4 16 2 32-6 46-10-30-34-50-66-56-30-6-58 4-78 26 2-16 10-30 22-40-32 4-58 22-74 48-8 14-14 28-16 42-2-8-4-16-6-24z" fill="#0a1826"/>
+    <path d="M846 300c20-4 40 0 56 12-18 0-34 6-46 18-6-10-8-20-10-30z" fill="#122a3d" opacity="0.85"/>
+    <path d="M676 460c-4-22 0-42 12-58-8 8-14 18-16 30 2 10 2 20 4 28z" fill="#132c40" opacity="0.55"/>
+    <!-- brows -->
+    <path d="M726 442h48M826 442h48" stroke="#0b1a27" stroke-width="9" stroke-linecap="round"/>
+    <!-- mouth: soft smile -->
+    <path d="M768 566c10 9 21 13 32 13s22-4 32-13" stroke="#3a2418" stroke-width="8" stroke-linecap="round" fill="none" opacity="0.85"/>
+    <!-- moustache, sitting just above the mouth -->
+    <path d="M752 534c17 11 33 16 48 16s31-5 48-16c-5 15-24 26-48 26s-43-11-48-26z" fill="#0b1a27" opacity="0.92"/>
+    <!-- light jaw stubble -->
+    <path d="M724 526c7 42 37 66 76 66s69-24 76-66c-15 28-44 45-76 45s-61-17-76-45z" fill="#0b1a27" opacity="0.16"/>
+    <!-- eyes -->
+    <g>
+      <ellipse cx="744" cy="484" rx="15" ry="12" fill="#ffffff" opacity="0.92"/>
+      <ellipse cx="856" cy="484" rx="15" ry="12" fill="#ffffff" opacity="0.92"/>
+      <circle cx="747" cy="485" r="7.5" fill="#2a1a10"/>
+      <circle cx="859" cy="485" r="7.5" fill="#2a1a10"/>
+      <circle cx="750" cy="482" r="2.6" fill="#ffffff"/>
+      <circle cx="862" cy="482" r="2.6" fill="#ffffff"/>
+    </g>
+
+    <!-- headphones -->
+    <path d="M654 470a146 146 0 0 1 292 0" stroke="#071320" stroke-width="30" stroke-linecap="round" fill="none"/>
+    <rect x="626" y="452" width="66" height="122" rx="32" fill="#0a1c2b"/>
+    <rect x="908" y="452" width="66" height="122" rx="32" fill="#0a1c2b"/>
+    <rect x="638" y="478" width="20" height="66" rx="10" fill="#63d6f7" opacity="0.9">
+      <animate attributeName="opacity" values="0.9;0.35;0.9" dur="1.75s" repeatCount="indefinite"/>
+    </rect>
+    </g>
+  </g>
+
+  <!-- desk -->
+  <rect x="0" y="812" width="1600" height="188" fill="url(#deskTop)"/>
+  <rect x="0" y="812" width="1600" height="10" fill="#2f6a95"/>
+  <rect x="0" y="812" width="1600" height="9" fill="#2f6a95" opacity="0.9"/>
+
+  <!-- monitor (back view, glow spilling around it) -->
+  <g>
+    <ellipse cx="800" cy="720" rx="330" ry="120" fill="#63d6f7" opacity="0.2"/>
+    <path d="M560 830V690c0-26 20-46 46-46h388c26 0 46 20 46 46v140z" fill="url(#monitorBack)"/>
+    <path d="M560 690c0-26 20-46 46-46h388c26 0 46 20 46 46" fill="none" stroke="#7fd8ff" stroke-width="4" opacity="0.7"/>
+    <rect x="742" y="830" width="116" height="26" rx="6" fill="#153148"/>
+  </g>
+
+  <!-- keyboard + mug + plant -->
+  <rect x="626" y="866" width="348" height="42" rx="10" fill="#12293e"/>
+  <g opacity="0.5" fill="#2b5a7d">
+    <rect x="646" y="878" width="34" height="12" rx="4"/><rect x="690" y="878" width="34" height="12" rx="4"/>
+    <rect x="734" y="878" width="34" height="12" rx="4"/><rect x="778" y="878" width="34" height="12" rx="4"/>
+    <rect x="822" y="878" width="34" height="12" rx="4"/><rect x="866" y="878" width="34" height="12" rx="4"/>
+  </g>
+  <g>
+    <rect x="1024" y="846" width="66" height="62" rx="10" fill="#1e4159"/>
+    <path d="M1090 862h20a16 16 0 0 1 0 32h-20" fill="none" stroke="#1e4159" stroke-width="9"/>
+    <path d="M1040 838c4-12 4-20 0-30M1060 838c4-12 4-20 0-30" stroke="#8fd9ff" stroke-width="4" stroke-linecap="round" opacity="0.5">
+      <animate attributeName="opacity" values="0.5;0.15;0.5" dur="4.6s" repeatCount="indefinite"/>
+    </path>
+  </g>
+  <g>
+    <path d="M440 908v-46" stroke="#2f6b63" stroke-width="7"/>
+    <path d="M440 866c-26-10-38-32-34-56 24 2 40 20 44 42M440 872c22-14 30-38 24-60-22 6-36 26-38 48" fill="#3f8a7c" opacity="0.85"/>
+    <path d="M410 908h60l-8 44h-44z" fill="#234a63"/>
+  </g>
+
+  <!-- desk lamp -->
+  <g>
+    <rect x="1300" y="700" width="10" height="208" rx="5" fill="#6f8ba3"/>
+    <ellipse cx="1305" cy="908" rx="58" ry="14" fill="#587189"/>
+    <path d="M1240 700h130l-40-96h-50z" fill="#7e9cb5"/>
+    <path d="M1240 700h130l-40-96h-50z" fill="#9ab8d0" opacity="0.5"/>
+    <ellipse cx="1305" cy="700" rx="65" ry="14" fill="#d8f2ff" opacity="0.9"/>
+    <path d="M1240 700 1120 1000h370L1370 700z" fill="#7fd8ff" opacity="0.13"/>
+  </g>
+
+  <!-- floating music notes -->
+  <g fill="#7fd8ff" opacity="0.8">
+    <g>
+      <circle cx="1108" cy="392" r="13"/>
+      <rect x="1116" y="330" width="6" height="64" rx="3"/>
+      <path d="M1122 330c16 5 24 11 28 21-8-6-16-8-28-6z"/>
+      <animateTransform attributeName="transform" type="translate" values="0 0; 0 -26; 0 0" dur="5.2s" repeatCount="indefinite"/>
+    </g>
+    <g opacity="0.6">
+      <circle cx="1178" cy="300" r="10"/>
+      <rect x="1184" y="252" width="5" height="50" rx="2.5"/>
+      <animateTransform attributeName="transform" type="translate" values="0 0; 0 -18; 0 0" dur="6.4s" repeatCount="indefinite"/>
+    </g>
+    <g opacity="0.45">
+      <circle cx="520" cy="420" r="9"/>
+      <rect x="525" y="378" width="4.5" height="44" rx="2.2"/>
+      <animateTransform attributeName="transform" type="translate" values="0 0; 0 -22; 0 0" dur="7.1s" repeatCount="indefinite"/>
+    </g>
+  </g>
+
+  <!-- vignette -->
+  <rect width="1600" height="1000" fill="url(#vig)"/>
+</svg>

@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" fill="none" role="img" aria-label="Event-driven Azure integration architecture">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="320" y2="200" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0d2b4d"/>
+      <stop offset="1" stop-color="#0b6bcb"/>
+    </linearGradient>
+    <linearGradient id="node" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0.08"/>
+    </linearGradient>
+    <linearGradient id="flow" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#38c6f4"/>
+      <stop offset="1" stop-color="#7a5cf0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="320" height="200" rx="10" fill="url(#bg)"/>
+
+  <!-- subtle grid -->
+  <g stroke="#ffffff" stroke-opacity="0.06">
+    <path d="M0 50h320M0 100h320M0 150h320"/>
+    <path d="M80 0v200M160 0v200M240 0v200"/>
+  </g>
+
+  <!-- connection lines -->
+  <g stroke="url(#flow)" stroke-width="2" stroke-linecap="round">
+    <path d="M62 100h34"/>
+    <path d="M158 100h30"/>
+    <path d="M128 82V56h60"/>
+    <path d="M128 118v26h60"/>
+    <path d="M250 74v52"/>
+  </g>
+
+  <!-- moving pulses along the bus -->
+  <circle r="3" fill="#5ee0ff">
+    <animateMotion dur="2.6s" repeatCount="indefinite" path="M62 100h34"/>
+  </circle>
+  <circle r="3" fill="#9d8bff">
+    <animateMotion dur="3.2s" repeatCount="indefinite" path="M128 82V56h60"/>
+  </circle>
+  <circle r="3" fill="#5ee0ff">
+    <animateMotion dur="3.6s" repeatCount="indefinite" path="M128 118v26h60"/>
+  </circle>
+
+  <!-- source: Dynamics 365 -->
+  <g>
+    <rect x="16" y="80" width="46" height="40" rx="8" fill="url(#node)" stroke="#8fd6ff" stroke-opacity="0.5"/>
+    <path d="M30 92h18M30 100h18M30 108h12" stroke="#bfe8ff" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- Service Bus (centre) -->
+  <g>
+    <rect x="96" y="78" width="62" height="44" rx="10" fill="#0b6bcb" stroke="#5ee0ff" stroke-opacity="0.7"/>
+    <path d="M108 100h38" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="112" cy="90" r="3.2" fill="#5ee0ff"/>
+    <circle cx="127" cy="90" r="3.2" fill="#5ee0ff"/>
+    <circle cx="142" cy="90" r="3.2" fill="#5ee0ff"/>
+    <circle cx="112" cy="110" r="3.2" fill="#9d8bff"/>
+    <circle cx="127" cy="110" r="3.2" fill="#9d8bff"/>
+    <circle cx="142" cy="110" r="3.2" fill="#9d8bff"/>
+  </g>
+
+  <!-- Functions -->
+  <g>
+    <rect x="188" y="38" width="62" height="36" rx="8" fill="url(#node)" stroke="#8fd6ff" stroke-opacity="0.5"/>
+    <path d="M214 46l-8 12h8l-4 10 12-13h-8l4-9z" fill="#ffd66b"/>
+  </g>
+
+  <!-- Logic Apps -->
+  <g>
+    <rect x="188" y="126" width="62" height="36" rx="8" fill="url(#node)" stroke="#8fd6ff" stroke-opacity="0.5"/>
+    <circle cx="206" cy="144" r="5" stroke="#7ae7ff" stroke-width="2"/>
+    <circle cx="232" cy="144" r="5" stroke="#7ae7ff" stroke-width="2"/>
+    <path d="M211 144h16" stroke="#7ae7ff" stroke-width="2"/>
+  </g>
+
+  <!-- APIM gateway -->
+  <g>
+    <rect x="264" y="74" width="42" height="52" rx="9" fill="url(#node)" stroke="#8fd6ff" stroke-opacity="0.55"/>
+    <path d="M274 88h22M274 100h22M274 112h14" stroke="#bfe8ff" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- labels -->
+  <g fill="#cfe8ff" font-family="monospace" font-size="7" opacity="0.85">
+    <text x="16" y="132">D365 F&amp;O</text>
+    <text x="96" y="134">Service Bus</text>
+    <text x="188" y="32">Functions</text>
+    <text x="188" y="174">Logic Apps</text>
+    <text x="264" y="140">APIM</text>
+  </g>
+</svg>

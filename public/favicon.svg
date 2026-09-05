@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="g" x1="6" y1="6" x2="58" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#0b6bcb"/>
+      <stop offset="1" stop-color="#38c6f4"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="15" fill="url(#g)"/>
+  <!-- MG monogram -->
+  <path d="M14 45V21l9 13 9-13v24" stroke="#ffffff" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M50 27a8.5 9 0 1 0 0 12h-4.5" stroke="#ffffff" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>

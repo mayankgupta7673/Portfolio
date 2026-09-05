@@ -1,0 +1,308 @@
+/* ===== Marquee ===== */
+.marquee {
+  position: relative;
+  padding-block: 26px;
+  border-block: 1px solid var(--border);
+  overflow: hidden;
+  white-space: nowrap;
+  background: var(--bg);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.marquee-track {
+  display: inline-flex;
+  gap: 58px;
+  animation: marquee 34s linear infinite;
+}
+.marquee-track span {
+  font-family: var(--font-mono);
+  font-size: 0.92rem;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+}
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* ===== Project card ===== */
+.project-card {
+  position: relative;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: transform var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast);
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-card);
+}
+.project-thumb {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--surface-alt);
+}
+.project-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s var(--ease-out);
+}
+.project-card:hover .project-thumb img {
+  transform: scale(1.06);
+}
+.project-body {
+  padding: 26px 26px 28px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+.project-client {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--azure-deep);
+}
+.project-card h3 {
+  margin-top: 10px;
+  font-size: 1.32rem;
+}
+.project-summary {
+  margin-top: 13px;
+  color: var(--text-muted);
+  font-size: 0.93rem;
+  flex-grow: 1;
+}
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 20px;
+}
+.project-tags .tag {
+  font-size: 0.68rem;
+  padding: 5px 12px;
+  background: var(--surface-alt);
+}
+.project-metric {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  margin-top: 20px;
+  padding-top: 17px;
+  border-top: 1px solid var(--border);
+}
+.project-metric strong {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.6rem;
+  letter-spacing: -0.03em;
+}
+.project-metric span {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+/* ===== Skill card ===== */
+.skill-card {
+  padding: 26px;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+.skill-card h3 {
+  font-size: 0.86rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-dim);
+  margin-bottom: 18px;
+  font-weight: 400;
+}
+.skill-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.skill-chip {
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-alt);
+  border: 1px solid transparent;
+  font-size: 0.83rem;
+  transition: border-color var(--dur-fast), transform var(--dur-fast);
+}
+.skill-chip:hover {
+  border-color: var(--cyan);
+  transform: translateY(-2px);
+}
+
+/* ===== Certification chip ===== */
+.cert-chip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 19px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+.cert-chip .code {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--azure);
+  font-size: 0.83rem;
+}
+.cert-chip .name {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+/* ===== About ===== */
+.about-grid {
+  display: grid;
+  gap: clamp(36px, 6vw, 80px);
+  align-items: center;
+}
+.about-photo {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  box-shadow: var(--shadow-soft);
+}
+.about-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.about-badge {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 18px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(10px);
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--text);
+}
+.about-badge .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2f7d4f;
+  display: inline-block;
+  margin-right: 8px;
+}
+.about-content p {
+  color: var(--text-muted);
+  margin-top: 18px;
+  max-width: 56ch;
+}
+.about-checklist {
+  margin-top: 32px;
+  display: grid;
+  gap: 14px;
+}
+.about-checklist li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 0.96rem;
+  font-weight: 500;
+}
+.about-checklist svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--azure);
+}
+@media (min-width: 880px) {
+  .about-grid {
+    grid-template-columns: 420px 1fr;
+  }
+}
+
+/* ===== Floating glossy shapes (juanmora-style) ===== */
+.shape-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gradient-chrome);
+  filter: blur(0.5px);
+  box-shadow: inset -14px -18px 40px rgba(255, 255, 255, 0.75),
+    inset 12px 16px 40px rgba(220, 140, 100, 0.35), 0 30px 60px -30px rgba(180, 110, 70, 0.45);
+  opacity: 0.85;
+  will-change: transform;
+}
+.blob.pill {
+  border-radius: var(--radius-pill);
+}
+.blob.squircle {
+  border-radius: 26%;
+}
+.blob-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--azure);
+  will-change: transform;
+}
+
+/* ===== Loader ===== */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: var(--bg-warm);
+  display: grid;
+  place-items: center;
+  transition: opacity 0.7s var(--ease-out), visibility 0.7s;
+}
+.loader.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.loader-mark {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  letter-spacing: 0.08em;
+}
+.loader-bar {
+  width: 180px;
+  height: 2px;
+  background: rgba(36, 28, 23, 0.12);
+  overflow: hidden;
+  margin-top: 16px;
+  border-radius: 2px;
+}
+.loader-bar span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: var(--azure-deep);
+}

@@ -1,0 +1,69 @@
+:root {
+  color-scheme: light;
+
+  /* Cloud-light surfaces — cool, airy, Azure-leaning without being Microsoft-branded */
+  --bg: #f7fbff;
+  --bg-warm: #eff7ff;
+  --bg-deep: #e4f1fd;
+  --bg-cta: #4aa3e0;
+  --surface: #ffffff;
+  --surface-alt: #f2f8fe;
+  --ink-dark: #0d2338;
+  --ink-dark-2: #0d2540;
+
+  /* Text */
+  --text: #12304d;
+  --text-muted: #62819d;
+  --text-dim: #93aac1;
+  --text-on-dark: #eaf3fc;
+  --text-ghost: #cfe6fa;
+
+  /* Accents: Azure blue primary, cyan for cloud, violet for AI, amber to keep it human */
+  --azure: #2b8ae0;
+  --azure-deep: #1c6cb8;
+  --cyan: #63d6f7;
+  --violet: #8e78f2;
+  --amber: #f0a64e;
+
+  --accent: var(--azure);
+  --accent-2: var(--cyan);
+  --accent-3: var(--violet);
+
+  --border: rgba(18, 48, 77, 0.09);
+  --border-strong: rgba(18, 48, 77, 0.2);
+
+  --gradient-azure: linear-gradient(135deg, #2b8ae0 0%, #63d6f7 100%);
+  --gradient-ai: linear-gradient(135deg, #2b8ae0 0%, #8e78f2 100%);
+  --gradient-chrome: linear-gradient(150deg, #ffffff 0%, #dceefc 45%, #63d6f7 100%);
+
+  /* Type */
+  --font-display: "Outfit", "Bricolage Grotesque", system-ui, sans-serif;
+  --font-body: "Outfit", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", monospace;
+
+  /* Layout */
+  --container: min(1240px, 92vw);
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 34px;
+  --radius-pill: 999px;
+  --header-h: 84px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 0.25s;
+  --dur-med: 0.6s;
+  --dur-slow: 1s;
+
+  --shadow-soft: 0 30px 70px -30px rgba(9, 40, 75, 0.35);
+  --shadow-card: 0 18px 50px -22px rgba(9, 40, 75, 0.4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0.01s;
+    --dur-med: 0.01s;
+    --dur-slow: 0.01s;
+  }
+}
