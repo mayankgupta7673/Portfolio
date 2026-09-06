@@ -21,6 +21,14 @@ const IDLE = "Idle";
 const GREETING = "Wave";
 const REACTIONS = ["ThumbsUp", "Jump", "Dance", "Yes", "Wave"];
 
+// Reacts once, unprompted, the first time you scroll to specific sections —
+// same one-shot animation as tap-to-react, just cued by what you're looking
+// at instead of a click, so it feels like it's actually paying attention.
+const MILESTONES: { selector: string; name: string }[] = [
+  { selector: "#skills .cert-row", name: "Yes" }, // a nod at the certifications
+  { selector: "#contact", name: "ThumbsUp" }, // a thumbs-up at contact
+];
+
 export function initCompanion(): void {
   const host = document.querySelector<HTMLElement>("[data-companion]");
   if (!host) return;
@@ -82,14 +90,43 @@ export function initCompanion(): void {
     current = next;
   };
 
-  const react = () => {
-    if (!mixer || performance.now() < busyUntil) return;
-    const name = REACTIONS[reactionIndex++ % REACTIONS.length];
+  const playOnce = (name: string): boolean => {
+    if (!mixer || performance.now() < busyUntil) return false;
     const action = actions[name];
-    if (!action) return;
+    if (!action) return false;
     fadeTo(name, 0.18, true);
     busyUntil = performance.now() + action.getClip().duration * 1000;
+    return true;
   };
+
+  const react = () => {
+    playOnce(REACTIONS[reactionIndex++ % REACTIONS.length]);
+  };
+
+  // Re-triggerable on a genuine return visit, but not on every pass — a
+  // per-milestone cooldown stops a wobble right at the section boundary (or
+  // idle back-and-forth scrolling) from replaying the reaction repeatedly.
+  const MILESTONE_COOLDOWN = 12000;
+  const milestones = MILESTONES.map(({ selector, name }) => ({
+    el: document.querySelector(selector),
+    name,
+    cooldownUntil: 0,
+  }));
+  const tryMilestone = (m: (typeof milestones)[number]) => {
+    if (!m.el || performance.now() < m.cooldownUntil) return;
+    if (playOnce(m.name)) m.cooldownUntil = performance.now() + MILESTONE_COOLDOWN;
+  };
+  milestones.forEach((m) => {
+    if (!m.el) return;
+    // Same rootMargin nav.ts already relies on for reliable "has this section
+    // reached the middle of the viewport" detection, rather than a fixed
+    // intersection-ratio threshold that a short element (the cert row) can
+    // slip past without ever crossing.
+    new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && tryMilestone(m)),
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
+    ).observe(m.el);
+  });
 
   new GLTFLoader().load(
     "/models/character.glb",
@@ -123,6 +160,17 @@ export function initCompanion(): void {
       }
       mixer.addEventListener("finished", () => fadeTo(IDLE, 0.28));
       gsap.to(host, { opacity: 1, scale: 1, duration: 0.7, ease: "back.out(1.6)" });
+
+      // The model can still be loading when a milestone section first scrolls
+      // into view — its IntersectionObserver callback fires, but playOnce()
+      // silently no-ops since mixer isn't ready yet, and if the user is
+      // already sitting still on that section there's no further intersection
+      // change to retry on. Catch that here with a one-time visibility check.
+      milestones.forEach((m) => {
+        if (!m.el) return;
+        const r = m.el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) tryMilestone(m);
+      });
     },
     undefined,
     () => host.remove(),
