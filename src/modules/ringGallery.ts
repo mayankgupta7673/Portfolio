@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { createBloom } from "./bloom";
+import { getIconTexture } from "./iconTexture";
 
 // The real stack — cloud platforms first (multi-cloud), then languages/frameworks,
 // then delivery/AI tooling. Every icon here corresponds to a skill listed in #skills.
@@ -20,37 +21,6 @@ const ICONS = [
   "/icons/monitoring.svg",
   "/icons/apps.svg",
 ];
-
-/**
- * SVGs are rasterised onto a canvas before becoming a texture: THREE.TextureLoader
- * uploads them through an <img>, which frequently yields a blank texture for SVG
- * sources (same issue fixed in journeyStage.ts). Cached per URL so the 15 icons
- * shown twice around the ring only decode once each.
- */
-const textureCache = new Map<string, THREE.CanvasTexture>();
-function getIconTexture(src: string): THREE.CanvasTexture {
-  const cached = textureCache.get(src);
-  if (cached) return cached;
-
-  const size = 512;
-  const canvas = document.createElement("canvas");
-  canvas.width = size;
-  canvas.height = size;
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  const img = new Image();
-  img.onload = () => {
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return;
-    ctx.clearRect(0, 0, size, size);
-    ctx.drawImage(img, 0, 0, size, size);
-    texture.needsUpdate = true;
-  };
-  img.src = src;
-
-  textureCache.set(src, texture);
-  return texture;
-}
 
 /**
  * A cylinder of tech-stack icons orbiting a central glowing core — spins continuously

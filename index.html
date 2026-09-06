@@ -214,6 +214,7 @@
         <div class="hero-media" data-hero-media>
           <img src="/images/night-desk.svg" alt="Stylised night scene: working at a desk by warm lamp light" fetchpriority="high" />
         </div>
+        <div class="hero-flow" data-hero-flow aria-hidden="true"></div>
 
         <div class="hero-top">
           <div class="container">
@@ -264,10 +265,11 @@
 
       <!-- ============ STATEMENT ============ -->
       <section class="statement">
-        <div class="container">
+        <div class="container statement-layout">
           <p class="statement-text" data-statement>
             I connect enterprise systems that were never meant to talk to each other.
           </p>
+          <div class="arch-diagram" data-arch-diagram aria-hidden="true"></div>
         </div>
       </section>
 
@@ -384,10 +386,12 @@
                     <p class="journey-desc">
                       Started in .NET application development, learning the full software
                       development lifecycle end to end &mdash; requirement analysis, design,
-                      coding, testing and maintenance.
+                      coding, testing and maintenance. Designed and shipped new features and
+                      enhancements with an early emphasis on backward compatibility, a habit
+                      that shaped every platform built since.
                     </p>
                     <div class="journey-tags">
-                      <span class="tag">C#</span><span class="tag">.NET</span><span class="tag">SQL Server</span>
+                      <span class="tag">C#</span><span class="tag">.NET</span><span class="tag">SQL Server</span><span class="tag">SDLC</span>
                     </div>
                   </div>
                 </div>
@@ -400,12 +404,13 @@
                     <p class="journey-role">Software Engineer &middot; HCL Technologies</p>
                     <h3 class="journey-title">Modernisation</h3>
                     <p class="journey-desc">
-                      Migrated a legacy reporting system from WebFocus to .NET and SSRS, and
-                      orchestrated the migration of 15+ applications from ColdFusion 2011 to
-                      ColdFusion 2018.
+                      Migrated a legacy reporting system from WebFocus to .NET and SQL Server
+                      Reporting Services, and orchestrated the migration of 15+ applications
+                      from ColdFusion 2011 to ColdFusion 2018 &mdash; modernisation work
+                      recognised with the HCL Achievers Award for outstanding performance.
                     </p>
                     <div class="journey-tags">
-                      <span class="tag">SSRS</span><span class="tag">ColdFusion</span><span class="tag">Migration</span>
+                      <span class="tag">SSRS</span><span class="tag">ColdFusion</span><span class="tag">Migration</span><span class="tag">HCL Achievers Award</span>
                     </div>
                   </div>
                 </div>
@@ -420,10 +425,12 @@
                     <p class="journey-desc">
                       Built CI/CD pipelines with VSTS and Azure, owned installation and
                       configuration, and coordinated change management across development and
-                      deployment teams.
+                      deployment teams. This is where ownership started extending past code
+                      itself &mdash; release cadence, environment consistency, and the
+                      coordination that keeps a delivery pipeline trustworthy.
                     </p>
                     <div class="journey-tags">
-                      <span class="tag">CI/CD</span><span class="tag">VSTS</span><span class="tag">Azure</span>
+                      <span class="tag">CI/CD</span><span class="tag">VSTS</span><span class="tag">Azure</span><span class="tag">Release Management</span>
                     </div>
                   </div>
                 </div>
@@ -438,10 +445,12 @@
                     <p class="journey-desc">
                       Built .NET applications, Azure Functions, Logic Apps and APIM; provisioned
                       infrastructure as code with ARM and migrated on-premise applications to
-                      Azure IaaS and PaaS.
+                      Azure IaaS and PaaS. Owned architecture, conceptual, data-flow and
+                      sequence diagrams end to end, and ran project delivery through Azure
+                      DevOps &mdash; work recognised with the Live Wire Achievement Award.
                     </p>
                     <div class="journey-tags">
-                      <span class="tag">Azure Functions</span><span class="tag">ARM</span><span class="tag">Azure DevOps</span>
+                      <span class="tag">Azure Functions</span><span class="tag">ARM</span><span class="tag">Azure DevOps</span><span class="tag">Live Wire Award</span>
                     </div>
                   </div>
                 </div>
@@ -456,10 +465,13 @@
                     <p class="journey-desc">
                       Owning the full lifecycle of an enterprise-scale Dynamics 365 F&amp;O
                       integration platform &mdash; solution architecture, .NET 10 development,
-                      infrastructure and APIM across multiple domains.
+                      infrastructure and APIM across multiple domains. Secured every
+                      PaaS-to-PaaS hop with Managed Identity and Entra ID, built in resilience
+                      with Polly v8 and dead-letter replay, and added observability through
+                      Azure Monitor &mdash; recognised with Capgemini&rsquo;s WOW Award.
                     </p>
                     <div class="journey-tags">
-                      <span class="tag">Dynamics 365 F&amp;O</span><span class="tag">APIM</span><span class="tag">.NET 10</span>
+                      <span class="tag">Dynamics 365 F&amp;O</span><span class="tag">APIM</span><span class="tag">.NET 10</span><span class="tag">Entra ID</span><span class="tag">Polly v8</span>
                     </div>
                   </div>
                 </div>
@@ -474,10 +486,11 @@
                     <p class="journey-desc">
                       Architecting an AI-native Auto Heal platform on Microsoft Foundry
                       multi-agent orchestration, GPT-4o, an MCP tool server and Azure AI Search
-                      &mdash; to autonomously detect, diagnose and heal Service Bus failures.
+                      &mdash; to autonomously detect, diagnose and heal Service Bus failures,
+                      targeting a shift in mean-time-to-recovery from hours to minutes.
                     </p>
                     <div class="journey-tags">
-                      <span class="tag">Microsoft Foundry</span><span class="tag">MCP</span><span class="tag">Azure AI Search</span>
+                      <span class="tag">Microsoft Foundry</span><span class="tag">MCP</span><span class="tag">Azure AI Search</span><span class="tag">GPT-4o</span>
                     </div>
                   </div>
                 </div>
@@ -697,14 +710,14 @@
             <h2 class="section-title reveal" data-reveal>Certified.</h2>
           </div>
           <div class="cert-row">
-            <div class="cert-chip reveal" data-reveal><span class="code">AZ-305</span><span class="name">Azure Solutions Architect Expert</span></div>
-            <div class="cert-chip reveal" data-reveal><span class="code">AZ-400</span><span class="name">DevOps Engineer Expert</span></div>
-            <div class="cert-chip reveal" data-reveal><span class="code">AZ-204</span><span class="name">Azure Developer Associate</span></div>
-            <div class="cert-chip reveal" data-reveal><span class="code">AZ-104</span><span class="name">Azure Administrator Associate</span></div>
-            <div class="cert-chip reveal" data-reveal><span class="code">DP-600</span><span class="name">Fabric Analytics Engineer Associate</span></div>
-            <div class="cert-chip reveal" data-reveal><span class="code">PL-200</span><span class="name">Power Platform Functional Consultant</span></div>
-            <div class="cert-chip reveal" data-reveal><span class="code">AWS</span><span class="name">Certified Cloud Practitioner</span></div>
-            <div class="cert-chip reveal" data-reveal><span class="code">CompTIA</span><span class="name">IT Fundamentals</span></div>
+            <div class="cert-chip reveal" data-reveal data-tilt data-tilt-deg="6" data-tilt-lift="-4"><span class="code">AZ-305</span><span class="name">Azure Solutions Architect Expert</span></div>
+            <div class="cert-chip reveal" data-reveal data-tilt data-tilt-deg="6" data-tilt-lift="-4"><span class="code">AZ-400</span><span class="name">DevOps Engineer Expert</span></div>
+            <div class="cert-chip reveal" data-reveal data-tilt data-tilt-deg="6" data-tilt-lift="-4"><span class="code">AZ-204</span><span class="name">Azure Developer Associate</span></div>
+            <div class="cert-chip reveal" data-reveal data-tilt data-tilt-deg="6" data-tilt-lift="-4"><span class="code">AZ-104</span><span class="name">Azure Administrator Associate</span></div>
+            <div class="cert-chip reveal" data-reveal data-tilt data-tilt-deg="6" data-tilt-lift="-4"><span class="code">DP-600</span><span class="name">Fabric Analytics Engineer Associate</span></div>
+            <div class="cert-chip reveal" data-reveal data-tilt data-tilt-deg="6" data-tilt-lift="-4"><span class="code">PL-200</span><span class="name">Power Platform Functional Consultant</span></div>
+            <div class="cert-chip reveal" data-reveal data-tilt data-tilt-deg="6" data-tilt-lift="-4"><span class="code">AWS</span><span class="name">Certified Cloud Practitioner</span></div>
+            <div class="cert-chip reveal" data-reveal data-tilt data-tilt-deg="6" data-tilt-lift="-4"><span class="code">CompTIA</span><span class="name">IT Fundamentals</span></div>
           </div>
         </div>
       </section>
@@ -760,6 +773,7 @@
               agentic systems on Microsoft Azure.
             </p>
           </div>
+          <div class="skill-constellation" data-skill-constellation aria-hidden="true"></div>
           <div class="footer-links">
             <div class="footer-col">
               <h3>Explore</h3>

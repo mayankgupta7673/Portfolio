@@ -49,6 +49,22 @@ function bootstrap() {
   initTestimonials();
 
   // 3D scenes, loaded on approach
+  lazyScene("[data-hero-flow]", async () => {
+    const { initHeroFlow } = await import("./modules/heroFlow");
+    initHeroFlow();
+  });
+
+  lazyScene("[data-arch-diagram]", async () => {
+    const { initArchDiagram } = await import("./modules/archDiagram");
+    initArchDiagram();
+  });
+
+  lazyScene("[data-skill-constellation]", async () => {
+    const { initSkillConstellation } = await import("./modules/skillConstellation");
+    initSkillConstellation();
+  });
+
+
   // Cursor companion follows you across the whole page, so unlike the other
   // scenes it isn't gated behind an IntersectionObserver — but its ~150KB
   // (Three.js + gsap chunk) still shouldn't compete with the hero's own

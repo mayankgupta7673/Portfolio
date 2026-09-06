@@ -140,7 +140,7 @@ p {
 
 section {
   position: relative;
-  padding-block: clamp(80px, 12vw, 170px);
+  padding-block: clamp(64px, 9vw, 130px);
 }
 
 .section-head {
