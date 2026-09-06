@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { createBloom } from "./bloom";
 
 // The real stack — cloud platforms first (multi-cloud), then languages/frameworks,
 // then delivery/AI tooling. Every icon here corresponds to a skill listed in #skills.
@@ -68,6 +69,10 @@ export function initRingGallery(): { setScroll(v: number): void } | null {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   host.appendChild(renderer.domElement);
 
+  // Bloom on the glowing core — the icon textures opt out below so they stay
+  // crisp instead of blowing out under the tone-mapping bloom needs.
+  const bloom = createBloom(renderer, scene, camera, { strength: 0.55, radius: 0.5, threshold: 0.45 });
+
   scene.add(new THREE.AmbientLight(0xffffff, 1.1));
   const glow = new THREE.PointLight(0x63d6f7, 90, 40);
   glow.position.set(0, 0, 0);
@@ -101,7 +106,9 @@ export function initRingGallery(): { setScroll(v: number): void } | null {
 
     const plane = new THREE.Mesh(
       new THREE.PlaneGeometry(1.55, 1.55),
-      new THREE.MeshBasicMaterial({ map: tex, side: THREE.DoubleSide, transparent: true }),
+      // toneMapped: false keeps the icon art at its original brightness — only
+      // the emissive core and point light should read as "glowing".
+      new THREE.MeshBasicMaterial({ map: tex, side: THREE.DoubleSide, transparent: true, toneMapped: false }),
     );
     plane.position.set(Math.cos(angle) * RADIUS, row * 0.95, Math.sin(angle) * RADIUS);
     plane.lookAt(0, row * 0.95, 0);
@@ -121,6 +128,7 @@ export function initRingGallery(): { setScroll(v: number): void } | null {
     const rect = host.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) return;
     renderer.setSize(rect.width, rect.height, false);
+    bloom.setSize(rect.width, rect.height);
     const aspect = rect.width / rect.height;
     camera.aspect = aspect;
     // Only pull the camera back for aspects narrower than the reference (portrait/
@@ -151,7 +159,7 @@ export function initRingGallery(): { setScroll(v: number): void } | null {
     }
     camera.position.y = 0.35 - scroll * 0.45;
     camera.lookAt(0, 0, 0);
-    renderer.render(scene, camera);
+    bloom.render();
   };
   tick();
 

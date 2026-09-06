@@ -8,6 +8,7 @@ import { playHeroIntro } from "./modules/heroIntro";
 import { initSmoothScroll } from "./modules/smoothScroll";
 import { initCursor } from "./modules/cursor";
 import { initMagnetic } from "./modules/magnetic";
+import { initTilt } from "./modules/tilt";
 import { initNav } from "./modules/nav";
 import { initMarquee } from "./modules/marquee";
 import { initJourney } from "./modules/journey";
@@ -48,8 +49,15 @@ function bootstrap() {
   initTestimonials();
 
   // 3D scenes, loaded on approach
-  // Cursor companion loads immediately — it follows you across the whole page
-  void import("./modules/companion").then(({ initCompanion }) => initCompanion());
+  // Cursor companion follows you across the whole page, so unlike the other
+  // scenes it isn't gated behind an IntersectionObserver — but its ~150KB
+  // (Three.js + gsap chunk) still shouldn't compete with the hero's own
+  // images/fonts for bandwidth during first paint. Deferred to the next idle
+  // moment instead; Safari has no requestIdleCallback, hence the fallback.
+  const idle = window.requestIdleCallback ?? ((cb: IdleRequestCallback) => window.setTimeout(cb, 1200));
+  idle(() => {
+    void import("./modules/companion").then(({ initCompanion }) => initCompanion());
+  });
 
   lazyScene("[data-globe]", async () => {
     const { initGlobe } = await import("./modules/globe");
@@ -76,6 +84,7 @@ function bootstrap() {
   initSmoothScroll();
   initCursor();
   initMagnetic();
+  initTilt();
   initNav();
   initCounters();
   initReveals();
