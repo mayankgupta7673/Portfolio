@@ -4,7 +4,21 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#f4f8fc" />
+    <meta name="theme-color" content="#f4f8fc" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b1420" media="(prefers-color-scheme: dark)" />
+
+    <!--
+      Sets data-theme on <html> before any CSS is parsed, so the very first paint
+      already matches the saved/preferred theme — must run before the <style>
+      block below, since that block's selectors key off this attribute.
+    -->
+    <script>
+      (function () {
+        var stored = localStorage.getItem("theme");
+        var theme = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
 
     <!--
       Critical CSS, inlined so first paint is never unstyled — this covers only the
@@ -33,6 +47,10 @@
         background: rgba(18, 48, 77, 0.12); overflow: hidden;
       }
       .loader-bar span { display: block; height: 100%; width: 0%; background: #1c6cb8; }
+      html[data-theme="dark"], html[data-theme="dark"] body { background: #0b1420; }
+      html[data-theme="dark"] .loader { background: #0d1a29; }
+      html[data-theme="dark"] .loader-mark { color: #93aac1; }
+      html[data-theme="dark"] .loader-bar { background: rgba(255, 255, 255, 0.1); }
     </style>
     <link rel="stylesheet" href="/src/style.css" />
 
@@ -179,6 +197,15 @@
             <a href="#contact" data-nav-link>Contact</a>
           </nav>
           <a href="https://www.linkedin.com/in/mayankgupta7673/" target="_blank" rel="noopener" class="header-link">LinkedIn</a>
+          <button class="theme-toggle" data-theme-toggle type="button" aria-label="Switch to light theme">
+            <svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8" />
+              <path d="M12 2.5v2.4M12 19.1v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+            </svg>
+            <svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M20 14.2A8.5 8.5 0 1 1 9.8 4a6.6 6.6 0 0 0 10.2 10.2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+            </svg>
+          </button>
           <a class="resume-btn" href="/resume/Resume_Mayank_7Yrs_Azure_Integration.pdf" target="_blank" rel="noopener" data-magnetic>
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M9 6H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3M14 4h6v6M20 4l-9 9" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" />
@@ -203,6 +230,15 @@
         <a href="/resume/Resume_Mayank_7Yrs_Azure_Integration.pdf" download>Resume &darr;</a>
       </nav>
       <div class="mobile-nav-footer">
+        <button class="theme-toggle theme-toggle--mobile" data-theme-toggle type="button" aria-label="Switch to light theme">
+          <svg class="icon-sun" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <circle cx="12" cy="12" r="4.2" stroke="currentColor" stroke-width="1.8" />
+            <path d="M12 2.5v2.4M12 19.1v2.4M4.6 4.6l1.7 1.7M17.7 17.7l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.6 19.4l1.7-1.7M17.7 6.3l1.7-1.7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+          </svg>
+          <svg class="icon-moon" width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M20 14.2A8.5 8.5 0 1 1 9.8 4a6.6 6.6 0 0 0 10.2 10.2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" />
+          </svg>
+        </button>
         <a href="mailto:contact@mayankcloud.com">contact@mayankcloud.com</a>
         <span>&copy; <span data-year></span></span>
       </div>

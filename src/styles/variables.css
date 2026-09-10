@@ -67,3 +67,28 @@
     --dur-slow: 0.01s;
   }
 }
+
+/* Dark theme: remaps the semantic surface/text/border tokens that light-section
+   components already read from `var(--bg)` / `var(--text)` etc. The sections that
+   are dark by design regardless of theme (hero, journey, ring gallery, footer) use
+   their own literal colours and are unaffected either way. */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0b1420;
+  --bg-warm: #0d1a29;
+  --bg-deep: #091120;
+  --surface: #12212f;
+  --surface-alt: #16283a;
+
+  --text: #e8f1fb;
+  --text-muted: #9db4cc;
+  --text-dim: #5f7b98;
+  --text-ghost: #33506b;
+
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.18);
+
+  --shadow-soft: 0 30px 70px -30px rgba(0, 0, 0, 0.55);
+  --shadow-card: 0 18px 50px -22px rgba(0, 0, 0, 0.6);
+}

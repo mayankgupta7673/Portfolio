@@ -19,6 +19,7 @@ import { initReveals } from "./modules/reveals";
 import { initHoverFx } from "./modules/hoverFx";
 import { initScrollProgress } from "./modules/scrollProgress";
 import { initScrambleReveal } from "./modules/scrambleReveal";
+import { initThemeToggle } from "./modules/theme";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -42,6 +43,7 @@ function lazyScene(selector: string, load: () => Promise<unknown>, rootMargin = 
 
 function bootstrap() {
   // Content is static HTML (see index.html); these layer behavior on top of it.
+  initThemeToggle();
   initMarquee();
   initStatement();
   initShapes();
