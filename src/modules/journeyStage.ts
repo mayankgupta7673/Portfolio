@@ -75,7 +75,6 @@ export function initJourneyStage(): JourneyStage | null {
     const texture = new THREE.CanvasTexture(canvas);
     texture.colorSpace = THREE.SRGBColorSpace;
     const img = new Image();
-    img.crossOrigin = "anonymous";
     img.onload = () => {
       const ctx = canvas.getContext("2d");
       if (!ctx) return;

@@ -202,9 +202,8 @@ export function initGlobe(): void {
     colAttr = geo.getAttribute("color") as THREE.BufferAttribute;
   };
 
-  // Sample the world map for land/ocean
+  // Sample the world map for land/ocean (same-origin asset — no crossOrigin needed)
   const img = new Image();
-  img.crossOrigin = "anonymous";
   img.src = "/images/world-map.jpg";
   img.onload = () => {
     const c = document.createElement("canvas");

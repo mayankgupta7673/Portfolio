@@ -26,7 +26,7 @@ gsap.registerPlugin(ScrollTrigger);
  * Three.js is ~500KB, and none of it is needed for the hero. Load each 3D scene
  * only once its section is close to the viewport so first paint stays fast.
  */
-function lazyScene(selector: string, load: () => Promise<unknown>) {
+function lazyScene(selector: string, load: () => Promise<unknown>, rootMargin = "400px 0px") {
   const el = document.querySelector(selector);
   if (!el) return;
   const io = new IntersectionObserver(
@@ -35,7 +35,7 @@ function lazyScene(selector: string, load: () => Promise<unknown>) {
       io.disconnect();
       void load();
     },
-    { rootMargin: "400px 0px" },
+    { rootMargin },
   );
   io.observe(el);
 }
@@ -80,21 +80,30 @@ function bootstrap() {
     initGlobe();
   });
 
-  lazyScene("[data-ring]", async () => {
-    const { initRingGallery } = await import("./modules/ringGallery");
-    const ring = initRingGallery();
-    const ringTrack = document.querySelector<HTMLElement>("[data-ring-track]");
-    if (ring && ringTrack) {
-      ScrollTrigger.create({
-        trigger: ringTrack,
-        start: "top bottom",
-        end: "bottom top",
-        scrub: true,
-        onUpdate: (self) => ring.setScroll(self.progress),
-      });
-      ScrollTrigger.refresh();
-    }
-  });
+  // Heaviest lazy scene (WebGL + UnrealBloomPass shader compilation), so it gets a much
+  // larger rootMargin than the rest — loading starts while "work" is still on screen,
+  // instead of the compile stall landing right as the ring section reaches the viewport.
+  lazyScene(
+    "[data-ring]",
+    async () => {
+      const { initRingGallery } = await import("./modules/ringGallery");
+      const ring = initRingGallery();
+      const ringTrack = document.querySelector<HTMLElement>("[data-ring-track]");
+      if (ring && ringTrack) {
+        ScrollTrigger.create({
+          trigger: ringTrack,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+          onUpdate: (self) => ring.setScroll(self.progress),
+        });
+        // A full ScrollTrigger.refresh() re-measures every trigger on the page — deferred
+        // a frame so it doesn't add to the same tick as the WebGL/shader setup above.
+        requestAnimationFrame(() => ScrollTrigger.refresh());
+      }
+    },
+    "1200px 0px",
+  );
 
   // Interaction layer
   initSmoothScroll();

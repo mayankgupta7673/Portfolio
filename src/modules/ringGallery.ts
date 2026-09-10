@@ -41,7 +41,16 @@ export function initRingGallery(): { setScroll(v: number): void } | null {
 
   // Bloom on the glowing core — the icon textures opt out below so they stay
   // crisp instead of blowing out under the tone-mapping bloom needs.
-  const bloom = createBloom(renderer, scene, camera, { strength: 0.55, radius: 0.5, threshold: 0.45 });
+  // UnrealBloomPass compiles several extra shader programs (blur mips), which can
+  // stall the main thread for a beat; that compile is pushed to an idle callback
+  // so the ring's first frames render plainly instead of landing on a blocking frame.
+  let bloom: ReturnType<typeof createBloom> | null = null;
+  const scheduleIdle = window.requestIdleCallback ?? ((cb: IdleRequestCallback) => window.setTimeout(cb, 200));
+  scheduleIdle(() => {
+    bloom = createBloom(renderer, scene, camera, { strength: 0.55, radius: 0.5, threshold: 0.45 });
+    const rect = host.getBoundingClientRect();
+    if (rect.width && rect.height) bloom.setSize(rect.width, rect.height);
+  });
 
   scene.add(new THREE.AmbientLight(0xffffff, 1.1));
   const glow = new THREE.PointLight(0x63d6f7, 90, 40);
@@ -98,7 +107,7 @@ export function initRingGallery(): { setScroll(v: number): void } | null {
     const rect = host.getBoundingClientRect();
     if (rect.width === 0 || rect.height === 0) return;
     renderer.setSize(rect.width, rect.height, false);
-    bloom.setSize(rect.width, rect.height);
+    bloom?.setSize(rect.width, rect.height);
     const aspect = rect.width / rect.height;
     camera.aspect = aspect;
     // Only pull the camera back for aspects narrower than the reference (portrait/
@@ -129,7 +138,8 @@ export function initRingGallery(): { setScroll(v: number): void } | null {
     }
     camera.position.y = 0.35 - scroll * 0.45;
     camera.lookAt(0, 0, 0);
-    bloom.render();
+    if (bloom) bloom.render();
+    else renderer.render(scene, camera);
   };
   tick();
 
