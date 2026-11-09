@@ -7,7 +7,7 @@ scroll-driven storytelling, and three interactive WebGL scenes.
 hand-written CSS. Deploys as a static site to Cloudflare Pages.
 
 All copy, roles, dates, projects and certifications come from
-`public/resume/Resume_Mayank_7Yrs_Azure_Integration.pdf`, which is also linked for
+`public/resume/Resume_Mayank_8Yrs_Azure_Integration.pdf`, which is also linked for
 download from the header, hero and contact section.
 
 ## Structure (8 sections)
