@@ -20,6 +20,7 @@ import { initHoverFx } from "./modules/hoverFx";
 import { initScrollProgress } from "./modules/scrollProgress";
 import { initScrambleReveal } from "./modules/scrambleReveal";
 import { initThemeToggle } from "./modules/theme";
+import { initAnalytics } from "./modules/analytics";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,6 +50,7 @@ function bootstrap() {
   initShapes();
   initJourney();
   initTestimonials();
+  initAnalytics();
 
   // 3D scenes, loaded on approach
   lazyScene("[data-hero-flow]", async () => {
