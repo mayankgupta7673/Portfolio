@@ -18,7 +18,18 @@ export function initGlobe(): void {
 
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  // Stays invisible until the particles are actually built (see revealCanvas below) —
+  // otherwise the halo/ring fade in immediately while the land dots pop in a beat
+  // later once the world-map image finishes loading.
+  renderer.domElement.style.opacity = reduceMotion ? "1" : "0";
+  renderer.domElement.style.transition = "opacity 0.6s ease-out";
   host.appendChild(renderer.domElement);
+  const revealCanvas = () => {
+    if (reduceMotion) return;
+    requestAnimationFrame(() => {
+      renderer.domElement.style.opacity = "1";
+    });
+  };
 
   const group = new THREE.Group();
   scene.add(group);
@@ -214,6 +225,7 @@ export function initGlobe(): void {
     const ctx = c.getContext("2d", { willReadFrequently: true });
     if (!ctx) {
       buildParticles(() => true);
+      revealCanvas();
       return;
     }
     ctx.drawImage(img, 0, 0, W, H);
@@ -229,8 +241,12 @@ export function initGlobe(): void {
       // Ocean on this map is strongly blue-dominant; land is green/brown/white.
       return !(b > r + 12 && b > g + 6);
     });
+    revealCanvas();
   };
-  img.onerror = () => buildParticles(() => true);
+  img.onerror = () => {
+    buildParticles(() => true);
+    revealCanvas();
+  };
 
   // --- Pointer interaction ---
   const raycaster = new THREE.Raycaster();

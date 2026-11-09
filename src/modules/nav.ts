@@ -1,3 +1,4 @@
+import { gsap } from "gsap";
 import { scrollToHash } from "./smoothScroll";
 
 export function initNav(): void {
@@ -75,17 +76,35 @@ export function initNav(): void {
 
   const sections = Array.from(document.querySelectorAll<HTMLElement>("main section[id]"));
   const pillLinks = document.querySelectorAll<HTMLAnchorElement>(".nav-pill [data-nav-link]");
+  const indicator = document.querySelector<HTMLElement>("[data-nav-indicator]");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  const moveIndicator = (link: HTMLAnchorElement | null) => {
+    if (!indicator || !link) return;
+    gsap.to(indicator, {
+      x: link.offsetLeft - 6,
+      width: link.offsetWidth,
+      duration: reduceMotion ? 0 : 0.45,
+      ease: "power3.out",
+    });
+  };
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
         const id = entry.target.getAttribute("id");
+        let activeLink: HTMLAnchorElement | null = null;
         pillLinks.forEach((link) => {
-          link.classList.toggle("is-active", link.getAttribute("href") === `#${id}`);
+          const isActive = link.getAttribute("href") === `#${id}`;
+          link.classList.toggle("is-active", isActive);
+          if (isActive) activeLink = link;
         });
+        moveIndicator(activeLink);
       });
     },
     { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
   );
   sections.forEach((section) => observer.observe(section));
+  window.addEventListener("resize", () => moveIndicator(document.querySelector(".nav-pill a.is-active")));
 }

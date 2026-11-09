@@ -96,9 +96,9 @@ export function initJourney(): void {
   const st = ScrollTrigger.create({
     trigger: track,
     start: "top top",
-    end: () => `+=${totalSteps * 72}%`,
+    end: () => `+=${totalSteps * 62}%`,
     pin: true,
-    scrub: 1,
+    scrub: 0.6,
     anticipatePin: 1,
     onUpdate: (self) => {
       const raw = self.progress * totalSteps;

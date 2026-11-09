@@ -190,6 +190,7 @@ h2.section-title {
 }
 
 .btn {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -198,26 +199,45 @@ h2.section-title {
   font-size: 0.98rem;
   font-weight: 600;
   white-space: nowrap;
+  overflow: hidden;
+  isolation: isolate;
   transition: transform var(--dur-fast) var(--ease-out), background var(--dur-fast),
     color var(--dur-fast), box-shadow var(--dur-fast);
 }
+/* Soft diagonal sheen that sweeps across on hover — overlay blend keeps the label legible. */
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: -40% -20%;
+  background: linear-gradient(115deg, transparent 35%, rgba(255, 255, 255, 0.55) 50%, transparent 65%);
+  mix-blend-mode: overlay;
+  transform: translateX(-60%);
+  transition: transform var(--dur-slow) var(--ease-out);
+  pointer-events: none;
+}
+.btn:hover::before {
+  transform: translateX(60%);
+}
 .btn-primary {
-  background: var(--ink-dark);
+  background: var(--gradient-ai);
   color: var(--text-on-dark);
 }
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-card), 0 0 32px -8px rgba(43, 138, 224, 0.55);
 }
 .btn-ghost {
   border: 1px solid var(--border-strong);
   color: var(--text);
+  background: color-mix(in srgb, var(--surface) 55%, transparent);
+  backdrop-filter: blur(10px);
 }
 .btn-ghost:hover {
   background: var(--ink-dark);
   color: var(--text-on-dark);
   border-color: var(--ink-dark);
   transform: translateY(-2px);
+  box-shadow: var(--shadow-card);
 }
 
 .tag {

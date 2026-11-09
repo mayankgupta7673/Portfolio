@@ -10,8 +10,8 @@ export function initSmoothScroll(): Lenis {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   lenis = new Lenis({
-    duration: reduceMotion ? 0.01 : 1.1,
-    easing: (t) => 1 - Math.pow(1 - t, 3),
+    duration: reduceMotion ? 0.01 : 1.35,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: !reduceMotion,
     syncTouch: false,
   });

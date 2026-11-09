@@ -280,7 +280,8 @@ section {
 }
 .hero-lit .nav-pill a { color: #cfe6f8; }
 .hero-lit .nav-pill a:hover,
-.hero-lit .nav-pill a.is-active { background: #eaf6ff; color: #06192b; }
+.hero-lit .nav-pill a.is-active { color: #06192b; }
+.hero-lit .nav-pill-indicator { background: #eaf6ff; }
 .hero-lit .resume-btn { background: var(--gradient-azure); color: #06192b; }
 .hero-lit .menu-toggle { background: rgba(255, 255, 255, 0.16); border-color: rgba(255,255,255,0.24); }
 .hero-lit .menu-toggle span { background: #eaf6ff; }

@@ -58,6 +58,7 @@
 }
 
 .nav-pill {
+  position: relative;
   display: none;
   align-items: center;
   gap: 4px;
@@ -68,17 +69,31 @@
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 10px 30px -14px rgba(70, 40, 25, 0.35);
 }
+/* A single pill that GSAP slides/resizes to sit under the scroll-spy's active
+   link, instead of each link abruptly swapping its own background on/off. */
+.nav-pill-indicator {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  height: calc(100% - 12px);
+  width: 0;
+  border-radius: var(--radius-pill);
+  background: var(--ink-dark);
+  z-index: 0;
+  pointer-events: none;
+}
 .nav-pill a {
+  position: relative;
+  z-index: 1;
   padding: 9px 20px;
   border-radius: var(--radius-pill);
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--text-muted);
-  transition: background var(--dur-fast), color var(--dur-fast);
+  transition: color var(--dur-fast);
 }
 .nav-pill a:hover,
 .nav-pill a.is-active {
-  background: var(--ink-dark);
   color: var(--text-on-dark);
 }
 .nav-pill .nav-mark {
@@ -131,8 +146,10 @@
 }
 .site-header.on-dark-section .nav-pill a:hover,
 .site-header.on-dark-section .nav-pill a.is-active {
-  background: var(--bg);
   color: var(--ink-dark);
+}
+.site-header.on-dark-section .nav-pill-indicator {
+  background: var(--bg);
 }
 
 .menu-toggle {
@@ -517,11 +534,26 @@
 
 /* ===== Journey / scroll story ===== */
 .journey {
+  position: relative;
   padding-block: 0;
   background: var(--ink-dark);
   color: var(--text-on-dark);
 }
+/* Softens the hard light-to-dark cut coming out of the (theme-light) globe section —
+   fades from the page's current bg down into the journey's always-dark ink over the seam.
+   In dark theme --bg is already near --ink-dark, so this is a no-op there. */
+.journey::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: clamp(120px, 16vw, 220px);
+  background: linear-gradient(var(--bg), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
 .journey-head {
+  position: relative;
+  z-index: 2;
   padding-block: clamp(64px, 8vw, 110px) clamp(24px, 4vw, 46px);
 }
 .journey-head .section-title {
@@ -655,6 +687,7 @@
   gap: 8px;
 }
 .journey-dot {
+  position: relative;
   width: 26px;
   height: 26px;
   border-radius: 50%;
@@ -677,8 +710,37 @@
   border-color: transparent;
   color: #06192b;
 }
+/* Visible chapter label on hover/focus — makes the dot rail self-explanatory
+   instead of relying only on the (invisible-to-sighted-users) aria-label. */
+.journey-dot em {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  right: 50%;
+  transform: translateX(50%) translateY(4px);
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  color: var(--text-on-dark);
+  background: rgba(13, 35, 56, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 6px 11px;
+  border-radius: var(--radius-pill);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-fast), transform var(--dur-fast);
+}
+.journey-dot:hover em,
+.journey-dot:focus-visible em {
+  opacity: 1;
+  transform: translateX(50%) translateY(0);
+}
 @media (max-width: 700px) {
   .journey-index-label {
+    display: none;
+  }
+  .journey-dot em {
     display: none;
   }
 }
@@ -735,6 +797,9 @@
 }
 
 /* ===== Work ===== */
+#work {
+  position: relative;
+}
 .projects-grid {
   display: grid;
   gap: 22px;
@@ -755,13 +820,26 @@
 
 /* ===== Ring gallery (3D) ===== */
 .ring-section {
+  position: relative;
   background: var(--ink-dark);
   color: var(--text-on-dark);
   overflow: hidden;
   padding-block: 0;
 }
+/* Work (light) runs straight into this always-dark section — blend the seam
+   instead of a hard cut, matching the same technique used at the Journey seam. */
+.ring-section::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: clamp(100px, 14vw, 180px);
+  background: linear-gradient(var(--bg), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
 .ring-track {
   position: relative;
+  z-index: 2;
   height: 100svh;
 }
 .ring-stage {
@@ -869,7 +947,23 @@
 
 /* ===== Contact: solid peach block ===== */
 .contact {
+  position: relative;
   background: linear-gradient(150deg, #4aa3e0 0%, #6bbaea 55%, #8fd0f2 100%);
+}
+/* Gallery (always dark) runs into this always-bright section — same seam-blend
+   treatment, fading the previous section's dark down into this one's azure. */
+.contact::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: clamp(90px, 12vw, 150px);
+  background: linear-gradient(var(--ink-dark), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+.contact-inner {
+  position: relative;
+  z-index: 2;
 }
 .contact-title {
   font-size: clamp(2.4rem, 7vw, 6rem);
@@ -1013,6 +1107,16 @@
   padding-block: clamp(60px, 8vw, 100px) 30px;
   position: relative;
   overflow: hidden;
+}
+/* Contact's bright azure runs into this always-dark footer — blend the seam. */
+.site-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: clamp(90px, 12vw, 150px);
+  background: linear-gradient(#8fd0f2, transparent);
+  pointer-events: none;
+  z-index: 1;
 }
 .footer-top {
   display: grid;
