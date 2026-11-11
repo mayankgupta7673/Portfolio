@@ -13,7 +13,6 @@ import { initNav } from "./modules/nav";
 import { initMarquee } from "./modules/marquee";
 import { initJourney } from "./modules/journey";
 import { initChalklineTimeline } from "./modules/chalklineTimeline";
-import { initFaqAccordion } from "./modules/faqAccordion";
 import { initStatement, initShapes } from "./modules/statement";
 import { initTestimonials } from "./modules/testimonialCarousel";
 import { initCounters } from "./modules/counters";
@@ -52,7 +51,6 @@ function bootstrap() {
   initShapes();
   initJourney();
   initChalklineTimeline();
-  initFaqAccordion();
   initTestimonials();
   initAnalytics();
 

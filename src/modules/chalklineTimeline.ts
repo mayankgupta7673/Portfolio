@@ -5,7 +5,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 /**
  * A chalk line pulled taut between two nails: scattered milestone cards snap
- * onto it, in date order, the first time the strip scrolls into view.
+ * onto it, in date order, every time the strip scrolls into view — and
+ * scatter again on exit so the next entry (either direction) replays fresh.
  */
 export function initChalklineTimeline(): void {
   const root = document.querySelector<HTMLElement>("[data-chalkline]");
@@ -19,16 +20,16 @@ export function initChalklineTimeline(): void {
   const nails = Array.from(root.querySelectorAll<SVGCircleElement>("[data-chalkline-nail]"));
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // Scatter the cards around their resting spot — read by the CSS rule
-  // `transform: translate(var(--x), var(--y)) rotate(var(--rot))`.
-  cards.forEach((card) => {
-    const x = gsap.utils.random(-120, 120, 1);
-    const y = gsap.utils.random(-70, 90, 1);
-    const rot = gsap.utils.random(-16, 16, 1);
-    card.style.setProperty("--x", `${x}px`);
-    card.style.setProperty("--y", `${y}px`);
-    card.style.setProperty("--rot", `${rot}deg`);
-  });
+  // Each card's scattered rest spot, re-applied on every exit so replay looks
+  // the same as the first play instead of starting from wherever it landed.
+  const scatter = cards.map(() => ({
+    x: gsap.utils.random(-120, 120, 1),
+    y: gsap.utils.random(-70, 90, 1),
+    rotation: gsap.utils.random(-16, 16, 1),
+  }));
+
+  const scatterCards = () => cards.forEach((card, i) => gsap.set(card, scatter[i]));
+  scatterCards();
 
   if (reduceMotion) {
     gsap.set(cards, { x: 0, y: 0, rotation: 0 });
@@ -48,7 +49,10 @@ export function initChalklineTimeline(): void {
   const snapCards = () =>
     gsap.to(cards, { x: 0, y: 0, rotation: 0, duration: 0.9, ease: "back.out(1.7)", stagger: 0.09 });
 
+  let timeline: gsap.core.Timeline | null = null;
+
   const play = () => {
+    timeline?.kill();
     if (!svg || !path) {
       snapCards();
       return;
@@ -58,7 +62,7 @@ export function initChalklineTimeline(): void {
     const pull = { y: midY };
     drawLine(midY);
 
-    gsap
+    timeline = gsap
       .timeline()
       // pulled down…
       .to(pull, {
@@ -88,10 +92,18 @@ export function initChalklineTimeline(): void {
       .add(snapCards, 0.3);
   };
 
+  const reset = () => {
+    timeline?.kill();
+    path?.setAttribute("d", "");
+    scatterCards();
+  };
+
   ScrollTrigger.create({
     trigger: root,
     start: "top 72%",
-    once: true,
     onEnter: play,
+    onEnterBack: play,
+    onLeave: reset,
+    onLeaveBack: reset,
   });
 }

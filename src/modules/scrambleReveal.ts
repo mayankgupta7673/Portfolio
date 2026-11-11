@@ -16,26 +16,30 @@ export function initScrambleReveal(): void {
   const targets = gsap.utils.toArray<HTMLElement>(".section-title, .contact-title");
 
   targets.forEach((el) => {
+    if (el.hasAttribute("data-no-scramble")) return; // opted out — reflow during scramble disturbs a layout next to it
     if (el.querySelector("*")) return; // has child markup — skip, don't risk mangling it
     const original = el.textContent ?? "";
     if (!original.trim()) return;
 
+    const scramble = () => {
+      gsap.to(el, {
+        duration: 1,
+        ease: "none",
+        overwrite: "auto",
+        scrambleText: {
+          text: original,
+          chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ01",
+          revealDelay: 0.25,
+          speed: 0.4,
+        },
+      });
+    };
+
     ScrollTrigger.create({
       trigger: el,
       start: "top 85%",
-      once: true,
-      onEnter: () => {
-        gsap.to(el, {
-          duration: 1,
-          ease: "none",
-          scrambleText: {
-            text: original,
-            chars: "ABCDEFGHIJKLMNOPQRSTUVWXYZ01",
-            revealDelay: 0.25,
-            speed: 0.4,
-          },
-        });
-      },
+      onEnter: scramble,
+      onEnterBack: scramble,
     });
   });
 }

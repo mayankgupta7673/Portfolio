@@ -7,6 +7,9 @@ import { gsap } from "gsap";
  * when the scroll position jumps in a way Lenis doesn't mediate (keyboard Page Down,
  * find-in-page, hash navigation, scroll restoration). With a scroll-position-based
  * trigger those jumps can leave content stuck at opacity 0.
+ *
+ * Elements replay every time they re-enter the viewport (scrolling up or down) —
+ * they reset to hidden on exit so the next entry animates in again.
  */
 export function initReveals(): void {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -39,13 +42,15 @@ export function initReveals(): void {
   };
 
   const observer = new IntersectionObserver(
-    (entries, obs) => {
+    (entries) => {
       entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
         const el = entry.target as HTMLElement;
-        obs.unobserve(el);
-        batch.push(el);
-        if (!flushHandle) flushHandle = window.setTimeout(flush, 40);
+        if (entry.isIntersecting) {
+          batch.push(el);
+          if (!flushHandle) flushHandle = window.setTimeout(flush, 40);
+        } else {
+          gsap.to(el, { opacity: 0, y: 26, duration: 0.35, ease: "power2.out", overwrite: "auto" });
+        }
       });
     },
     { rootMargin: "0px 0px -12% 0px", threshold: 0.05 },
@@ -64,3 +69,4 @@ export function initReveals(): void {
     });
   });
 }
+
