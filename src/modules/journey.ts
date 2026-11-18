@@ -22,17 +22,30 @@ export function initJourney(): void {
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   // Three.js loads only when the story section is near, keeping first paint light.
   let stage: { setChapter(i: number): void; setScroll(p: number): void } | null = null;
+  let stageStarted = false;
+  const startStage = () => {
+    if (stageStarted) return;
+    stageStarted = true;
+    stageObserver.disconnect();
+    void import("./journeyStage").then(({ initJourneyStage }) => {
+      stage = initJourneyStage();
+    });
+  };
   const stageObserver = new IntersectionObserver(
     (entries) => {
-      if (!entries.some((e) => e.isIntersecting)) return;
-      stageObserver.disconnect();
-      void import("./journeyStage").then(({ initJourneyStage }) => {
-        stage = initJourneyStage();
-      });
+      if (entries.some((e) => e.isIntersecting)) startStage();
     },
     { rootMargin: "400px 0px" },
   );
   stageObserver.observe(track);
+  // WebGL setup is a main-thread stall; pre-warm it during idle time so it doesn't
+  // land mid-scroll as the section arrives.
+  window.addEventListener("load", () => {
+    window.setTimeout(() => {
+      if ("requestIdleCallback" in window) window.requestIdleCallback(startStage, { timeout: 2000 });
+      else startStage();
+    }, 6500);
+  });
 
   // Chapters hand over sequentially: the outgoing one is fully gone before the
   // incoming one appears, so two chapters are never stacked on screen at once.

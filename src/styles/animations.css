@@ -420,15 +420,13 @@ section {
 @keyframes holoShift {
   to { background-position: -200% 0; }
 }
-@keyframes gridDrift {
-  to { background-position: 64px 64px; }
-}
 @keyframes glowPulse {
   0%, 100% { opacity: 0.55; }
   50% { opacity: 1; }
 }
 
-/* HUD grid, fixed behind all content, fading out toward the bottom */
+/* HUD grid, fixed behind all content, fading out toward the bottom. Static on
+   purpose: animating a full-viewport background repaints it every frame while scrolling. */
 body::before {
   content: "";
   position: fixed;
@@ -441,7 +439,6 @@ body::before {
   background-size: 64px 64px;
   -webkit-mask-image: radial-gradient(120% 65% at 50% 0%, #000 0%, transparent 75%);
   mask-image: radial-gradient(120% 65% at 50% 0%, #000 0%, transparent 75%);
-  animation: gridDrift 50s linear infinite;
 }
 
 /* Glass header with a faint neon seam */
@@ -467,20 +464,21 @@ body::before {
   box-shadow: var(--shadow-card), var(--glow-cyan);
 }
 
-/* Holographic, shifting hero name — targets .hero-letter (the actual glyph
-   wrappers) since the gradient-clip has nothing to clip to on the plain
-   .hero-name-part container that just wraps them */
+/* Holographic hero name — targets .hero-letter (the actual glyph wrappers) since
+   the gradient-clip has nothing to clip to on the .hero-name-part container.
+   Static gradient + a single glow on the word: per-letter filters/animation were
+   a constant paint cost on the largest text on the page. */
 .hero--character .hero-name-part .hero-letter {
   background: var(--gradient-holo);
   background-size: 200% 100%;
+  background-position: 30% 0;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  filter: drop-shadow(0 0 20px rgba(99, 214, 247, 0.4)) drop-shadow(0 12px 40px rgba(4, 20, 38, 0.6));
-  animation: holoShift 9s linear infinite;
 }
 .hero--character .hero-name-part {
   text-shadow: none;
+  filter: drop-shadow(0 0 18px rgba(99, 214, 247, 0.35));
 }
 .hero-name:hover .hero-name-part .hero-letter {
   background-image: linear-gradient(#ffffff, #ffffff);
@@ -564,16 +562,34 @@ body::before {
   color: #fff;
 }
 
+/* Section heading underline that sweeps in once (transform-only, see headingReveal.ts) */
+.has-sweep::after {
+  content: "";
+  display: block;
+  width: 72px;
+  height: 3px;
+  margin-top: 18px;
+  border-radius: 3px;
+  background: var(--gradient-ai);
+  box-shadow: var(--glow-cyan);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.9s var(--ease-out) 0.2s;
+}
+.has-sweep.is-swept::after {
+  transform: scaleX(1);
+}
+.contact-title.has-sweep::after {
+  margin-top: 22px;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  body::before {
-    animation: none !important;
-  }
-  .hero--character .hero-name-part {
-    animation: none !important;
-  }
   .globe-stage::before,
   .ring-stage::before {
     animation: none !important;
+  }
+  .has-sweep::after {
+    transition: none;
   }
 }
 

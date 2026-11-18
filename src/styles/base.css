@@ -93,8 +93,7 @@ p {
   inset: 0;
   z-index: 200;
   pointer-events: none;
-  opacity: 0.035;
-  mix-blend-mode: multiply;
+  opacity: 0.03;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
@@ -294,23 +293,6 @@ h2.section-title {
 /* Anchor targets clear the fixed header */
 section[id] {
   scroll-margin-top: calc(var(--header-h) + 20px);
-  /* Gentle pull toward each section's top once a scroll gesture settles near it —
-     "proximity" (not "mandatory") so it never blocks or hijacks mid-scroll. */
-  scroll-snap-align: start;
-}
-html {
-  scroll-snap-type: y proximity;
-}
-/* The journey timeline and ring gallery pin themselves and scrub their own
-   internal animation off scroll position — a snap point here would fight that. */
-#journey,
-#gallery {
-  scroll-snap-align: none;
-}
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-snap-type: none;
-  }
 }
 
 /* Hero letters (split by hoverFx for per-letter hover) */

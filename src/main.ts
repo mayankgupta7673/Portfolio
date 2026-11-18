@@ -26,21 +26,38 @@ import { initAnalytics } from "./modules/analytics";
 gsap.registerPlugin(ScrollTrigger);
 
 /**
- * Three.js is ~500KB, and none of it is needed for the hero. Load each 3D scene
- * only once its section is close to the viewport so first paint stays fast.
+ * Three.js is ~500KB, and none of it is needed for the hero. Each 3D scene loads when
+ * its section nears the viewport — or, failing that, during idle time a few seconds
+ * after load (`warmAfterMs`, staggered per scene). Pre-warming matters because WebGL
+ * context + shader setup is a 300-500ms main-thread stall that otherwise lands
+ * mid-scroll, right as the section arrives.
  */
-function lazyScene(selector: string, load: () => Promise<unknown>, rootMargin = "400px 0px") {
+function lazyScene(selector: string, load: () => Promise<unknown>, rootMargin = "400px 0px", warmAfterMs = 0) {
   const el = document.querySelector(selector);
   if (!el) return;
+  let started = false;
+  const start = () => {
+    if (started) return;
+    started = true;
+    io.disconnect();
+    void load();
+  };
   const io = new IntersectionObserver(
     (entries) => {
-      if (!entries.some((e) => e.isIntersecting)) return;
-      io.disconnect();
-      void load();
+      if (entries.some((e) => e.isIntersecting)) start();
     },
     { rootMargin },
   );
   io.observe(el);
+
+  if (warmAfterMs > 0) {
+    window.addEventListener("load", () => {
+      window.setTimeout(() => {
+        if ("requestIdleCallback" in window) window.requestIdleCallback(start, { timeout: 2000 });
+        else start();
+      }, warmAfterMs);
+    });
+  }
 }
 
 function bootstrap() {
@@ -63,12 +80,12 @@ function bootstrap() {
   lazyScene("[data-arch-diagram]", async () => {
     const { initArchDiagram } = await import("./modules/archDiagram");
     initArchDiagram();
-  });
+  }, "400px 0px", 3500);
 
   lazyScene("[data-skill-constellation]", async () => {
     const { initSkillConstellation } = await import("./modules/skillConstellation");
     initSkillConstellation();
-  });
+  }, "400px 0px", 8000);
 
 
   // Cursor companion follows you across the whole page, so unlike the other
@@ -84,7 +101,7 @@ function bootstrap() {
   lazyScene("[data-globe]", async () => {
     const { initGlobe } = await import("./modules/globe");
     initGlobe();
-  });
+  }, "400px 0px", 5000);
 
   // Heaviest lazy scene (WebGL + UnrealBloomPass shader compilation), so it gets a much
   // larger rootMargin than the rest — loading starts while "work" is still on screen,
@@ -109,6 +126,7 @@ function bootstrap() {
       }
     },
     "1200px 0px",
+    9500,
   );
 
   // Interaction layer
