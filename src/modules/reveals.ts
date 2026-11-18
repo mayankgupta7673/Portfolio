@@ -21,7 +21,12 @@ export function initReveals(): void {
     return;
   }
 
-  gsap.set(elements, { opacity: 0, y: 26 });
+  // Elements with [data-tilt] already have tilt.ts driving their "y" via a
+  // persistent quickTo tween — animating "y" here too trips GSAP's "not
+  // eligible for reset" warning, so those only fade (no slide offset).
+  const hasTilt = (el: HTMLElement) => el.hasAttribute("data-tilt");
+
+  elements.forEach((el) => gsap.set(el, hasTilt(el) ? { opacity: 0 } : { opacity: 0, y: 26 }));
 
   // Stagger elements that enter together, without letting one batch delay the next.
   let batch: HTMLElement[] = [];
@@ -31,14 +36,14 @@ export function initReveals(): void {
     flushHandle = 0;
     const items = batch;
     batch = [];
-    gsap.to(items, {
-      opacity: 1,
-      y: 0,
-      duration: 0.85,
-      ease: "power3.out",
-      stagger: 0.07,
-      overwrite: "auto",
-    });
+    const plain = items.filter((el) => !hasTilt(el));
+    const tilted = items.filter(hasTilt);
+    if (plain.length) {
+      gsap.to(plain, { opacity: 1, y: 0, duration: 0.85, ease: "power3.out", stagger: 0.07, overwrite: "auto" });
+    }
+    if (tilted.length) {
+      gsap.to(tilted, { opacity: 1, duration: 0.85, ease: "power3.out", stagger: 0.07, overwrite: "auto" });
+    }
   };
 
   const observer = new IntersectionObserver(
@@ -48,6 +53,8 @@ export function initReveals(): void {
         if (entry.isIntersecting) {
           batch.push(el);
           if (!flushHandle) flushHandle = window.setTimeout(flush, 40);
+        } else if (hasTilt(el)) {
+          gsap.to(el, { opacity: 0, duration: 0.35, ease: "power2.out", overwrite: "auto" });
         } else {
           gsap.to(el, { opacity: 0, y: 26, duration: 0.35, ease: "power2.out", overwrite: "auto" });
         }
@@ -64,7 +71,7 @@ export function initReveals(): void {
       const rect = el.getBoundingClientRect();
       const onScreen = rect.top < window.innerHeight && rect.bottom > 0;
       if (onScreen && Number(getComputedStyle(el).opacity) === 0) {
-        gsap.to(el, { opacity: 1, y: 0, duration: 0.6, overwrite: "auto" });
+        gsap.to(el, hasTilt(el) ? { opacity: 1, duration: 0.6, overwrite: "auto" } : { opacity: 1, y: 0, duration: 0.6, overwrite: "auto" });
       }
     });
   });

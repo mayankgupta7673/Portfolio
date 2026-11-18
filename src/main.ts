@@ -19,7 +19,7 @@ import { initCounters } from "./modules/counters";
 import { initReveals } from "./modules/reveals";
 import { initHoverFx } from "./modules/hoverFx";
 import { initScrollProgress } from "./modules/scrollProgress";
-import { initScrambleReveal } from "./modules/scrambleReveal";
+import { initHeadingReveal } from "./modules/headingReveal";
 import { initThemeToggle } from "./modules/theme";
 import { initAnalytics } from "./modules/analytics";
 
@@ -121,7 +121,7 @@ function bootstrap() {
   initReveals();
   initHoverFx();
   initScrollProgress();
-  initScrambleReveal();
+  initHeadingReveal();
 
   // Fonts and images shift layout; re-measure pinned/scrubbed triggers afterwards.
   window.addEventListener("load", () => ScrollTrigger.refresh());

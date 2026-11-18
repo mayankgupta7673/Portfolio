@@ -13,6 +13,9 @@ export function initSmoothScroll(): Lenis {
     duration: reduceMotion ? 0.01 : 1.35,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smoothWheel: !reduceMotion,
+    // Slightly below Lenis's default (1) so a single fast wheel flick covers less
+    // distance, making it harder to blow past a whole section unnoticed.
+    wheelMultiplier: 0.82,
     syncTouch: false,
   });
 

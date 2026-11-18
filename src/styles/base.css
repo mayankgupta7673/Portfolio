@@ -294,6 +294,23 @@ h2.section-title {
 /* Anchor targets clear the fixed header */
 section[id] {
   scroll-margin-top: calc(var(--header-h) + 20px);
+  /* Gentle pull toward each section's top once a scroll gesture settles near it —
+     "proximity" (not "mandatory") so it never blocks or hijacks mid-scroll. */
+  scroll-snap-align: start;
+}
+html {
+  scroll-snap-type: y proximity;
+}
+/* The journey timeline and ring gallery pin themselves and scrub their own
+   internal animation off scroll position — a snap point here would fight that. */
+#journey,
+#gallery {
+  scroll-snap-align: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-snap-type: none;
+  }
 }
 
 /* Hero letters (split by hoverFx for per-letter hover) */
